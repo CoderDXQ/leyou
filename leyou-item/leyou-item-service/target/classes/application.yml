@@ -4,12 +4,13 @@ spring:
   application:
     name: item-service
   datasource:
-    url: jdbc:mysql://localhost:3306/hm49
+    url: jdbc:mysql://localhost:3306/hm49?characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: dxq5522565
-#    hikari:
-#      maximum-pool-size: 30
-#      minimum-idle: 10
+    hikari:
+      maximum-pool-size: 30
+      minimum-idle: 10
+    driver-class-name: com.mysql.cj.jdbc.Driver
 eureka:
   client:
     service-url:

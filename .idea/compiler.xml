@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="ly-api-gateway" />
         <module name="leyou-registry" />
         <module name="leyou-common" />
         <module name="leyou-gateway" />
@@ -22,6 +23,7 @@
       <module name="leyou-item-interface" options="-parameters" />
       <module name="leyou-item-service" options="-parameters" />
       <module name="leyou-registry" options="-parameters" />
+      <module name="ly-api-gateway" options="-parameters" />
     </option>
   </component>
 </project>
