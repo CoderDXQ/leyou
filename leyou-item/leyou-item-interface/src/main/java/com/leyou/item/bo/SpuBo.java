@@ -1,7 +1,10 @@
 package com.leyou.item.bo;
 
 import com.leyou.item.pojo.Spu;
+import com.leyou.item.pojo.SpuDetail;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * @author Duan Xiangqing
@@ -11,6 +14,10 @@ import lombok.Data;
 
 @Data
 public class SpuBo extends Spu {
-    String cname;// 商品分类名称
-    String bname;// 品牌名称
+    private String cname;// 商品分类名称
+    private String bname;// 品牌名称
+
+    private SpuDetail SpuDetail;
+
+    private List<Sku> skus;
 }
