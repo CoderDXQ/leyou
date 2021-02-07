@@ -3,6 +3,7 @@ package com.leyou.item.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.leyou.common.pojo.PageResult;
+import com.leyou.item.bo.Sku;
 import com.leyou.item.bo.SpuBo;
 import com.leyou.item.mapper.*;
 import com.leyou.item.pojo.Brand;
@@ -12,8 +13,11 @@ import com.leyou.item.pojo.Stock;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
@@ -50,6 +54,7 @@ public class GoodsService {
     private StockMapper stockMapper;
 
 
+    //    saleable是否上架
     public PageResult<SpuBo> querySpuByPage(String key, Boolean saleable, Integer page, Integer rows) {
         Example example = new Example(Spu.class);
 //        创建标准
@@ -136,6 +141,58 @@ public class GoodsService {
             stock.setStock(sku.getStock());
             this.stockMapper.insertSelective(stock);
         });
+    }
+
+    public SpuDetail querySpuDetailBySpuId(Long spuId) {
+        return this.spuDetailMapper.selectByPrimaryKey(spuId);
+    }
+
+    public List<Sku> querySkusBySpuId(Long spuId) {
+        Sku record = new Sku();
+        record.setSpuId(spuId);
+        List<Sku> skus = this.skuMapper.select(record);
+
+        skus.forEach(sku -> {
+            Stock stock = this.stockMapper.selectByPrimaryKey(sku.getId());
+            sku.setStock(stock.getStock());
+        });
+
+        return skus;
+    }
+
+    /**
+     * 更新商品信息，更新的逻辑就是先删除后新增
+     *
+     * @param spuBo
+     * @return
+     */
+    public void updateGoods(SpuBo spuBo) {
+
+//        根据spuId查询要删除的sku
+        Sku record = new Sku();
+        record.setSpuId(spuBo.getId());
+        List<Sku> skus = this.skuMapper.select(record);
+
+        skus.forEach(sku -> {
+//            删除stock(库存)
+            this.stockMapper.deleteByPrimaryKey(sku.getId());
+        });
+
+//        删除sku
+        Sku sku = new Sku();
+        sku.setSpuId(spuBo.getId());
+        this.skuMapper.delete(sku);
+
+//        新增sku和stock
+        this.saveSkuAndStock(spuBo);
+
+//        更新spu和spuDetail
+        spuBo.setCreateTime(null);
+        spuBo.setLastUpdateTime(new Date());
+        spuBo.setValid(null);
+        spuBo.setSaleable(null);
+        this.spuMapper.updateByPrimaryKeySelective(spuBo);
+        this.spuDetailMapper.updateByPrimaryKeySelective(spuBo.getSpuDetail());
     }
 
 
