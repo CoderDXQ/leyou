@@ -21,6 +21,7 @@ import java.util.List;
  * @date 2021/2/7 12:59 上午
  */
 @Controller
+@RequestMapping("goods")
 public class GoodsController {
 
     @Autowired
@@ -35,7 +36,7 @@ public class GoodsController {
      * @param rows
      * @return
      */
-    @GetMapping("spu/page")
+    @GetMapping("/spu/page")
     public ResponseEntity<PageResult<SpuBo>> querySpuByPage(
             @RequestParam(value = "key", required = false) String key,
             @RequestParam(value = "saleable", required = false) Boolean saleable,
@@ -61,9 +62,9 @@ public class GoodsController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("spu/detail/{spuId}")
-    public ResponseEntity<SpuDetail> querySpuDetailBySpuId(@PathVariable("SpuId") Long spuId) {
-        SpuDetail spuDetail = this.goodsService.querySpuDetailBySpuId(spuId);
+    @GetMapping("spu/detail/{id}")
+    public ResponseEntity<SpuDetail> querySpuDetailBySpuId(@PathVariable("id") Long id) {
+        SpuDetail spuDetail = this.goodsService.querySpuDetailBySpuId(id);
 
         if (spuDetail == null) {
             return ResponseEntity.notFound().build();

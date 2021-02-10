@@ -1,8 +1,8 @@
 package com.leyou.search.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.leyou.common.pojo.PageResult;
 import com.leyou.item.bo.Sku;
 import com.leyou.item.pojo.Brand;
 import com.leyou.item.pojo.SpecParam;
@@ -13,9 +13,17 @@ import com.leyou.search.client.CategoryClient;
 import com.leyou.search.client.GoodsClient;
 import com.leyou.search.client.SpecificationClient;
 import com.leyou.search.pojo.Goods;
+import com.leyou.search.pojo.SearchRequest;
+import com.leyou.search.repository.GoodsRepository;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.elasticsearch.index.query.Operator;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
 
 
@@ -42,6 +50,9 @@ public class SearchService {
 
     @Autowired
     private SpecificationClient specificationClient;
+
+    @Autowired
+    private GoodsRepository goodsRepository;
 
     //    json工具
     private static final ObjectMapper MAPPER = new ObjectMapper();
@@ -77,7 +88,7 @@ public class SearchService {
         });
 
 //        根据spu中的cid3查询出所有的搜索规格参数
-        List<SpecParam> params = this.specificationClient.queryParams(null, spu.getCid3(), null, true);
+        List<SpecParam> params = this.specificationClient.queryParams(null, spu.getCid3(), false, null);
 
 //        根据spuId查询spuDetail
         SpuDetail spuDetail = this.goodsClient.querySpuDetailBySpuId(spu.getId());
@@ -158,6 +169,31 @@ public class SearchService {
             }
         }
         return result;
+    }
+
+    public PageResult<Goods> search(SearchRequest request) {
+
+//        查询关键字为空
+        if (StringUtils.isBlank(request.getKey())) {
+            return null;
+        }
+
+//        自定义查询构建器
+        NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
+
+//        添加查询条件
+        queryBuilder.withQuery(QueryBuilders.matchQuery("all", request.getKey()).operator(Operator.AND));
+//        添加分页，分页页码从0开始
+        queryBuilder.withPageable(PageRequest.of(request.getPage() - 1, request.getSize()));
+//        添加结果集过滤
+        queryBuilder.withSourceFilter(new FetchSourceFilter(new String[]{"id", "skus", "subTitle"}, null));
+
+//        执行查询，获取结果集
+        Page<Goods> goodsPage = this.goodsRepository.search(queryBuilder.build());
+
+//        int totalpages=goodsPage.getTotalPages();
+        return new PageResult<>(goodsPage.getTotalElements(), Long.valueOf(goodsPage.getTotalPages()), goodsPage.getContent());
+
     }
 
 

@@ -20,28 +20,25 @@ import java.util.List;
 @RequestMapping("/goods")
 public interface GoodsApi {
 
-//    @GetMapping("spu/page")
-//    public ResponseEntity<PageResult<SpuBo>> querySpuByPage(
-//            @RequestParam(value = "key", required = false) String key,
-//            @RequestParam(value = "saleable", required = false) Boolean saleable,
-//            @RequestParam(value = "page", defaultValue = "1") Integer page,
-//            @RequestParam(value = "rows", defaultValue = "5") Integer rows) {
-//
-//    }
-//
-//
-//    /**
-//     * 分页查询
-//     *
-//     * @param spuBo
-//     * @return
-//     */
-//    @PostMapping("goods")
-//    public ResponseEntity<Void> saveGoods(@RequestBody SpuBo spuBo) {
-//    }
+    @GetMapping("/spu/page")
+    public PageResult<SpuBo> querySpuByPage(
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "saleable", required = false) Boolean saleable,
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "5") Integer rows);
 
-    @GetMapping("spu/detail/{spuId}")
-    public SpuDetail querySpuDetailBySpuId(@PathVariable("SpuId") Long spuId);
+
+    /**
+     * 分页查询
+     *
+     * @param spuBo
+     * @return
+     */
+    @PostMapping("goods")
+    public Void saveGoods(@RequestBody SpuBo spuBo);
+
+    @GetMapping("spu/detail/{id}")
+    public SpuDetail querySpuDetailBySpuId(@PathVariable("id") Long id);
 
     @GetMapping("sku/list")
     public List<Sku> querySkusBySpuId(@RequestParam("id") Long spuId);

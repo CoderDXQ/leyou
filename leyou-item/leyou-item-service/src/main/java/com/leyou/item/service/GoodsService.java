@@ -54,7 +54,7 @@ public class GoodsService {
     private StockMapper stockMapper;
 
 
-    //    saleable是否上架
+    //    saleable是否上架  分页查询的条件和规则是多样的 对应场景是商城的大的搜索页面（可以设置搜索条件和排序方式等） 然后分页进行展示
     public PageResult<SpuBo> querySpuByPage(String key, Boolean saleable, Integer page, Integer rows) {
         Example example = new Example(Spu.class);
 //        创建标准
