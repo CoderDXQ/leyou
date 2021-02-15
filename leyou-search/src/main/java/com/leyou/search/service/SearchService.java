@@ -252,7 +252,7 @@ public class SearchService {
 
 
     //    对规格参数进行聚合
-    private List<Map<String, Object>> getParamAggResult(Long cid, MatchQueryBuilder basicQuery) {
+    private List<Map<String, Object>> getParamAggResult(Long cid, BoolQueryBuilder basicQuery) {
 //        自定义查询对象构建
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
 

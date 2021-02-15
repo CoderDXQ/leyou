@@ -9,6 +9,7 @@
         <module name="ly-api-gateway" />
         <module name="leyou-registry" />
         <module name="leyou-search" />
+        <module name="leyou-goods-web" />
         <module name="leyou-item-interface" />
         <module name="leyou-upload" />
         <module name="leyou-common" />
@@ -21,6 +22,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="leyou-common" options="-parameters" />
       <module name="leyou-gateway" options="-parameters" />
+      <module name="leyou-goods-web" options="-parameters" />
       <module name="leyou-item" options="-parameters" />
       <module name="leyou-item-interface" options="-parameters" />
       <module name="leyou-item-service" options="-parameters" />
