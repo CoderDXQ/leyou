@@ -275,6 +275,7 @@ public class SearchService {
         return specs;
     }
 
+//    解析商品分类聚合结果
     private List<Map<String, Object>> getCategoryAggResult(Aggregation aggregation) {
         LongTerms terms = (LongTerms) aggregation;
 
@@ -289,6 +290,7 @@ public class SearchService {
 
     }
 
+//    解析品牌聚合结果
     private List<Brand> getBrandAggResult(Aggregation aggregation) {
         LongTerms terms = (LongTerms) aggregation;
 

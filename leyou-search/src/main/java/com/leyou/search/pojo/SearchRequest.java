@@ -2,6 +2,8 @@ package com.leyou.search.pojo;
 
 import lombok.Data;
 
+import java.util.Map;
+
 /**
  * @author Duan Xiangqing
  * @version 1.0
@@ -13,6 +15,8 @@ public class SearchRequest {
     private String key;// 搜索条件
 
     private Integer page;// 当前页
+
+    private Map<String, Object> filter;
 
 
     private static final Integer DEFAULT_SIZE = 20;// 每页大小，不从页面接收，而是固定大小
