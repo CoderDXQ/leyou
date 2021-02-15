@@ -110,7 +110,7 @@ public class GoodsService {
     }
 
 
-    @Transactional
+    @Transactional //插入要加事务注解  隔离级别一般采用默认即可
     public void saveGoods(SpuBo spuBo) {
         // 新增spu
         // 设置默认字段

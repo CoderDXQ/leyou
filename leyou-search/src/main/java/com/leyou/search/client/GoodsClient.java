@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 
 //添加client接口调用商品微服务
-@FeignClient("item-service")
+@FeignClient(value = "item-service")
 //@RequestMapping("/goods")
 public interface GoodsClient extends GoodsApi {//另一个模块的开发人员在GoodsApi里声明接口之后，FeignClient的类里只需要继承就行
 

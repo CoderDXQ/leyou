@@ -52,4 +52,5 @@ public interface BrandApi {
     @GetMapping("{id}")
     public Brand queryBrandById(@PathVariable("id") Long id);
 
+
 }

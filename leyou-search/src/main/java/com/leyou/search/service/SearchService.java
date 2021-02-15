@@ -14,14 +14,19 @@ import com.leyou.search.client.GoodsClient;
 import com.leyou.search.client.SpecificationClient;
 import com.leyou.search.pojo.Goods;
 import com.leyou.search.pojo.SearchRequest;
+import com.leyou.search.pojo.SearchResult;
 import com.leyou.search.repository.GoodsRepository;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.terms.LongTerms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
@@ -29,6 +34,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Duan Xiangqing
@@ -171,7 +177,7 @@ public class SearchService {
         return result;
     }
 
-    public PageResult<Goods> search(SearchRequest request) {
+    public SearchResult search(SearchRequest request) {
 
 //        查询关键字为空
         if (StringUtils.isBlank(request.getKey())) {
@@ -188,12 +194,44 @@ public class SearchService {
 //        添加结果集过滤
         queryBuilder.withSourceFilter(new FetchSourceFilter(new String[]{"id", "skus", "subTitle"}, null));
 
+//        添加分类和品牌聚合
+        String catetegoryAggName = "categories";
+        String brandAggName = "brands";
+        queryBuilder.addAggregation(AggregationBuilders.terms(catetegoryAggName).field("cid3"));
+        queryBuilder.addAggregation(AggregationBuilders.terms(brandAggName).field("brandId"));
+
 //        执行查询，获取结果集
-        Page<Goods> goodsPage = this.goodsRepository.search(queryBuilder.build());
+        AggregatedPage<Goods> goodsPage = (AggregatedPage<Goods>) this.goodsRepository.search(queryBuilder.build());
+
+        //        获取聚合结果集并解析
+        List<Map<String, Object>> categories = getCategoryAggResult(goodsPage.getAggregation(catetegoryAggName));
+        List<Brand> brands = getBrandAggResult(goodsPage.getAggregation(brandAggName));
 
 //        int totalpages=goodsPage.getTotalPages();
-        return new PageResult<>(goodsPage.getTotalElements(), Long.valueOf(goodsPage.getTotalPages()), goodsPage.getContent());
+        return new SearchResult(goodsPage.getTotalElements(), Long.valueOf(goodsPage.getTotalPages()), goodsPage.getContent(), null, null);
 
+    }
+
+    private List<Map<String, Object>> getCategoryAggResult(Aggregation aggregation) {
+        LongTerms terms = (LongTerms) aggregation;
+
+        return terms.getBuckets().stream().map(bucket -> {
+            Map<String, Object> map = new HashMap<>();
+            Long id = bucket.getKeyAsNumber().longValue();
+            List<String> names = this.categoryClient.queryNamesByIds(Arrays.asList(id));
+            map.put("id", id);
+            map.put("name", names.get(0));
+            return map;
+        }).collect(Collectors.toList());
+
+    }
+
+    private List<Brand> getBrandAggResult(Aggregation aggregation) {
+        LongTerms terms = (LongTerms) aggregation;
+
+        return terms.getBuckets().stream().map(bucket -> {
+            return this.brandClient.queryBrandById(bucket.getKeyAsNumber().longValue());
+        }).collect(Collectors.toList());
     }
 
 
