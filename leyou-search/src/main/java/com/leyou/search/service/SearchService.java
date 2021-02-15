@@ -19,6 +19,7 @@ import com.leyou.search.repository.GoodsRepository;
 import com.sun.xml.internal.xsom.impl.scd.Iterators;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -192,7 +193,8 @@ public class SearchService {
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
 
 //        添加查询条件
-        MatchQueryBuilder basicQuery = QueryBuilders.matchQuery("all", request.getKey()).operator(Operator.AND);
+//        MatchQueryBuilder basicQuery = QueryBuilders.matchQuery("all", request.getKey()).operator(Operator.AND);
+        BoolQueryBuilder basicQuery = buildBoolQueryBuilder(request);
         queryBuilder.withQuery(basicQuery);
 //        添加分页，分页页码从0开始
         queryBuilder.withPageable(PageRequest.of(request.getPage() - 1, request.getSize()));
@@ -223,6 +225,29 @@ public class SearchService {
 //        int totalpages=goodsPage.getTotalPages();
         return new SearchResult(goodsPage.getTotalElements(), Long.valueOf(goodsPage.getTotalPages()), goodsPage.getContent(), categories, brands, null);
 
+    }
+
+    //    构建布隆过滤器
+    private BoolQueryBuilder buildBoolQueryBuilder(SearchRequest request) {
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+
+//        给布尔查询添加基本查询条件
+        boolQueryBuilder.must(QueryBuilders.matchQuery("all", request.getKey()).operator(Operator.AND));
+//        添加过滤条件
+//        获取用户选择的过滤信息
+        Map<String, Object> filter = request.getFilter();
+        for (Map.Entry<String, Object> entry : filter.entrySet()) {
+            String key = entry.getKey();
+            if (StringUtils.equals("品牌", key)) {
+                key = "brandId";
+            } else if (StringUtils.equals("分类", key)) {
+                key = "cid3";
+            } else {
+                key = "specs." + key + ".keyword";
+            }
+            boolQueryBuilder.filter(QueryBuilders.termQuery(key, entry.getValue()));
+        }
+        return boolQueryBuilder;
     }
 
 
@@ -275,7 +300,7 @@ public class SearchService {
         return specs;
     }
 
-//    解析商品分类聚合结果
+    //    解析商品分类聚合结果
     private List<Map<String, Object>> getCategoryAggResult(Aggregation aggregation) {
         LongTerms terms = (LongTerms) aggregation;
 
@@ -290,7 +315,7 @@ public class SearchService {
 
     }
 
-//    解析品牌聚合结果
+    //    解析品牌聚合结果
     private List<Brand> getBrandAggResult(Aggregation aggregation) {
         LongTerms terms = (LongTerms) aggregation;
 
