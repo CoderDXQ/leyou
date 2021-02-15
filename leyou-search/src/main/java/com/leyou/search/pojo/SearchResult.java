@@ -21,21 +21,26 @@ public class SearchResult extends PageResult<Goods> {
 
     private List<Brand> brands;
 
-    public SearchResult(List<Map<String, Object>> categories, List<Brand> brands) {
+    private List<Map<String, Object>> specs;
+
+    public SearchResult(List<Map<String, Object>> categories, List<Brand> brands, List<Map<String, Object>> specs) {
         this.categories = categories;
         this.brands = brands;
+        this.specs = specs;
     }
 
-    public SearchResult(Long total, List<Goods> items, List<Map<String, Object>> categories, List<Brand> brands) {
+    public SearchResult(Long total, List<Goods> items, List<Map<String, Object>> categories, List<Brand> brands, List<Map<String, Object>> specs) {
         super(total, items);
         this.categories = categories;
         this.brands = brands;
+        this.specs = specs;
     }
 
-    public SearchResult(Long total, Long totalPage, List<Goods> items, List<Map<String, Object>> categories, List<Brand> brands) {
+    public SearchResult(Long total, Long totalPage, List<Goods> items, List<Map<String, Object>> categories, List<Brand> brands, List<Map<String, Object>> specs) {
         super(total, totalPage, items);
         this.categories = categories;
         this.brands = brands;
+        this.specs = specs;
     }
 
     public SearchResult() {
