@@ -1,5 +1,7 @@
 package com.leyou.item.pojo;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import java.util.List;
  * @date 2021/2/6 10:10 下午
  */
 @Table(name = "tb_spec_group")
+@Data
 public class SpecGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,35 +25,4 @@ public class SpecGroup {
     private List<SpecParam> params;
 
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getCid() {
-        return cid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCid(Long cid) {
-        this.cid = cid;
-    }
-
-    public List<SpecParam> getParams() {
-        return params;
-    }
-
-    public void setParams(List<SpecParam> params) {
-        this.params = params;
-    }
 }
