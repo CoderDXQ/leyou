@@ -47,4 +47,8 @@ public interface GoodsApi {
 //    @PutMapping("goods")
 //    public ResponseEntity<Void> updateGoods(@RequestBody SpuBo spuBo);
 
+    @GetMapping("{id}")
+    public Spu querySpuById(@PathVariable("id") Long id);
+
+
 }

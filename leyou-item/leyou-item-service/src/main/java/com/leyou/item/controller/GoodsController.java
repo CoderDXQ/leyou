@@ -3,6 +3,7 @@ package com.leyou.item.controller;
 import com.leyou.common.pojo.PageResult;
 import com.leyou.item.bo.Sku;
 import com.leyou.item.bo.SpuBo;
+import com.leyou.item.pojo.Spu;
 import com.leyou.item.pojo.SpuDetail;
 import com.leyou.item.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,9 +86,19 @@ public class GoodsController {
     }
 
     @PutMapping("goods")
-    public ResponseEntity<Void> updateGoods(@RequestBody SpuBo spuBo){
+    public ResponseEntity<Void> updateGoods(@RequestBody SpuBo spuBo) {
         this.goodsService.updateGoods(spuBo);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<Spu> querySpuById(@PathVariable("id") Long id) {
+        Spu spu = this.goodsService.querySpuById(id);
+
+        if (spu == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(spu);
     }
 
 
