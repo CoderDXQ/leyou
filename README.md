@@ -40,7 +40,17 @@
 8. 配置好hosts
 
    切换到root用户然后在`/private/etc`下使用`vim hosts`进行修改。
+   添加以下内容：
    
+   `127.0.0.1 api.leyou.com`
+   
+    `127.0.0.1 manage.leyou.com`
+    
+    `127.0.0.1 www.leyou.com`
+    
+    `10.108.163.120 image.leyou.com`
+    
+    然后在`/usr/local/etc/nginx`下执行`nginx -s reload`以重新启动nginx。
 
    
    
