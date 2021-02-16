@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 //需要写个请求地址验证一下   这里没有验证好 包括service也需要好好看看
 @Controller
-@CrossOrigin
+@CrossOrigin //解决跨域问题
 public class SearchController {
 
     @Autowired

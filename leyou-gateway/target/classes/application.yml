@@ -16,6 +16,20 @@ zuul:
   prefix: /api # 添加路由前缀
   routes:
     item-service: /item/** #路由到商品的微服务
+    search-service: /search/** #路由到搜索微服务
+
+
+#
+#filter:
+#  allowPaths:
+#    - /api/auth
+#    - /api/search
+#    - /api/user/register
+#    - /api/user/check
+#    - /api/user/code
+#    - /api/item
+#    - /zuul   ##关键需要添加的地方
+
 #  retryable: true
 #ribbon:
 #  ConnectTimeout: 250 # 连接超时时间(ms)

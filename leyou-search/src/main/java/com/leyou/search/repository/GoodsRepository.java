@@ -8,5 +8,7 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
  * @version 1.0
  * @date 2021/2/10 3:13 上午
  */
+
+//ES相关操作
 public interface GoodsRepository extends ElasticsearchRepository<Goods, Long> {
 }
