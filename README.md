@@ -63,6 +63,11 @@
    
    `service rabbitmq-server restart`
    
+10. 启动Redis
+
+    在部署了Redis的机器上使用`redis-server start`启动服务。
+    
+    或者在`/usr/local/bin`下执行二进制文件。
 
    
    
