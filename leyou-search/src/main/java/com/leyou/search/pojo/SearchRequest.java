@@ -18,6 +18,14 @@ public class SearchRequest {
 
     private Map<String, Object> filter;
 
+    public SearchRequest(String key) {
+        this.key = key;
+    }
+
+    public SearchRequest(Integer page) {
+        this.page = page;
+    }
+
     public SearchRequest() {
     }
 
