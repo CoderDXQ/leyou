@@ -325,4 +325,14 @@ public class SearchService {
     }
 
 
+    public void save(Long id) throws IOException {
+        Spu spu = this.goodsClient.querySpuById(id);
+//        创建静态页面的数据模型
+        Goods goods = this.buildGoods(spu);
+        this.goodsRepository.save(goods);
+    }
+
+    public void delete(Long id) {
+        this.goodsRepository.deleteById(id);
+    }
 }

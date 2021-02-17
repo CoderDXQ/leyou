@@ -18,7 +18,16 @@ public class SearchRequest {
 
     private Map<String, Object> filter;
 
+    public SearchRequest() {
+    }
+
     public SearchRequest(Map<String, Object> filter) {
+        this.filter = filter;
+    }
+
+    public SearchRequest(String key, Integer page, Map<String, Object> filter) {
+        this.key = key;
+        this.page = page;
         this.filter = filter;
     }
 

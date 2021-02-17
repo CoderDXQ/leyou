@@ -1,14 +1,17 @@
 # leyou
 
-### ???大部分功能只有查询，尝试把增删改查补全  可能要写mapper.xml或者写mapper接口也行
-### search模块的 CORS 403 跨域问题没有解决
-### 完成作业中的功能 https://github.com/ohmyray/leyou
+## Question:
+1. 大部分功能只有查询，尝试把增删改查补全  可能要写mapper.xml或者写mapper接口也行
 
-搭建一个小型商城项目，重点关注其中的秒杀部分。
+2. search模块的 CORS 403 跨域问题没有解决
 
-如果没有秒杀部分，就参考其他工程加上这个功能部分。
+3. 完成作业中的功能 https://github.com/ohmyray/leyou
 
-##  项目启动
+4. 搭建一个小型商城项目，重点关注其中的秒杀部分。如果没有秒杀部分，就参考其他工程加上这个功能部分。
+
+##  项目启动  
+相关安装和配置需要自己来完成，启动步骤如下：
+
 1. 启动nginx 
 
    在`/usr/local/etc/nginx`下执行`nginx`
@@ -51,6 +54,15 @@
     `10.108.163.120 image.leyou.com`
     
     然后在`/usr/local/etc/nginx`下执行`nginx -s reload`以重新启动nginx。
+
+9. 启动消息队列RabbitMQ
+   
+   `service rabbitmq-server start`
+   
+   `rabbitmq-plugins enable rabbitmq_management`
+   
+   `service rabbitmq-server restart`
+   
 
    
    

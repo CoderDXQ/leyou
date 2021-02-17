@@ -11,6 +11,8 @@ import com.leyou.item.pojo.Spu;
 import com.leyou.item.pojo.SpuDetail;
 import com.leyou.item.pojo.Stock;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +54,9 @@ public class GoodsService {
 
     @Autowired
     private StockMapper stockMapper;
+
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
 
     //    saleable是否上架  分页查询的条件和规则是多样的 对应场景是商城的大的搜索页面（可以设置搜索条件和排序方式等） 然后分页进行展示
@@ -126,6 +131,18 @@ public class GoodsService {
         this.spuDetailMapper.insertSelective(spuDetail);
 //        更新库存
         saveSkuAndStock(spuBo);
+
+        sendMsg("insert", spuBo.getId());
+    }
+
+
+    private void sendMsg(String type, Long id) {
+        try {
+            this.amqpTemplate.convertAndSend("item." + type, id);
+        } catch (AmqpException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void saveSkuAndStock(SpuBo spuBo) {
@@ -193,6 +210,8 @@ public class GoodsService {
         spuBo.setSaleable(null);
         this.spuMapper.updateByPrimaryKeySelective(spuBo);
         this.spuDetailMapper.updateByPrimaryKeySelective(spuBo.getSpuDetail());
+
+        sendMsg("update", spuBo.getId());
     }
 
 

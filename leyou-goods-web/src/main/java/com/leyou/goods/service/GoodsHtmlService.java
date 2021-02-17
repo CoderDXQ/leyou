@@ -66,4 +66,23 @@ public class GoodsHtmlService {
         }
 
     }
+
+    public void deleteHtml(Long id) {
+
+        //        找到staticpage所在的位置 默认地址是项目地址下的staticpage文件夹 这里加个打印需要看一下
+        File checkpath = new File(".");
+        String path = "";
+        try {
+            path = checkpath.getCanonicalPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(path);
+        path = path.substring(0, path.lastIndexOf("/") + 1) + "staticpage/";
+        System.out.println(path);
+
+        File file = new File(path + id + ".html");
+
+        file.deleteOnExit();
+    }
 }

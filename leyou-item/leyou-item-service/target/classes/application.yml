@@ -11,6 +11,15 @@ spring:
       maximum-pool-size: 30
       minimum-idle: 10
     driver-class-name: com.mysql.cj.jdbc.Driver
+  rabbitmq:
+    host: 10.108.163.120
+    username: leyou
+    password: leyou
+    virtual-host: /leyou
+    template:
+      exchange: leyou.item.exchange
+#    publisher-confirms: true
+
 eureka:
   client:
     service-url:
@@ -24,3 +33,4 @@ eureka:
 
 mybatis:
   type-aliases-package: com.leyou.item.pojo
+
