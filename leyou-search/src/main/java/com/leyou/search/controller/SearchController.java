@@ -26,6 +26,7 @@ public class SearchController {
     @Autowired
     private SearchService searchService;
 
+    //    使用postman发送post请求到 http://api.leyou.com/api/search/page?key=手机
     @PostMapping("page")
     public ResponseEntity<SearchResult> search(@RequestBody SearchRequest request) {
         SearchResult result = this.searchService.search(request);

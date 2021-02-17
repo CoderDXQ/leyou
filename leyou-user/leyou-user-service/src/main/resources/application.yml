@@ -13,6 +13,18 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
     host: 10.108.163.120
+  rabbitmq:
+    host: 10.108.163.120
+    username: leyou
+    password: leyou
+    virtual-host: /leyou
+    template:
+      retry:
+        enabled: true
+        initial-interval: 10000ms
+        max-interval: 210000ms
+        multiplier: 2
+    publisher-confirms: true
 
 
 
