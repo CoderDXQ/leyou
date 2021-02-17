@@ -10,7 +10,7 @@
 4. 搭建一个小型商城项目，重点关注其中的秒杀部分。如果没有秒杀部分，就参考其他工程加上这个功能部分。
 
 ##  项目启动  
-相关安装和配置需要自己来完成，启动步骤如下：
+相关安装和配置需要自己来完成，部分服务在120机器的CentOS7.6系统的leyou账户上，启动步骤如下：
 
 1. 启动nginx 
 
@@ -47,11 +47,11 @@
    
    `127.0.0.1 api.leyou.com`
    
-    `127.0.0.1 manage.leyou.com`
+   `127.0.0.1 manage.leyou.com`
     
-    `127.0.0.1 www.leyou.com`
+   `127.0.0.1 www.leyou.com`
     
-    `10.108.163.120 image.leyou.com`
+   `10.108.163.120 image.leyou.com`
     
     然后在`/usr/local/etc/nginx`下执行`nginx -s reload`以重新启动nginx。
 

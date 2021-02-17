@@ -27,5 +27,3 @@ eureka:
 
 mybatis:
   type-aliases-package: com.leyou.user.pojo
-
-  #??????记得要更改
