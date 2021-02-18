@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
+
 /**
  * @author Duan Xiangqing
  * @version 1.0
@@ -43,7 +45,7 @@ public class UserController {
 
     //使用postman发post请求到 localhost:8085/register 并填写username,password,code,phone等 code需要调用sendVerifyCode接口获得，可以从Redis查看
     @PostMapping("register")
-    public ResponseEntity<Void> register(User user, @RequestParam("code") String code) {
+    public ResponseEntity<Void> register(@Valid User user, @RequestParam("code") String code) {
         this.userService.register(user, code);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
