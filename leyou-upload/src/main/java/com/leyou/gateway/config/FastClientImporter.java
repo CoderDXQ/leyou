@@ -1,4 +1,4 @@
-package com.leyou.config;
+package com.leyou.gateway.config;
 
 import com.github.tobato.fastdfs.FdfsClientConfig;
 import org.springframework.context.annotation.Configuration;

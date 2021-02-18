@@ -2,7 +2,9 @@ package com.leyou.auth.controller;
 
 import com.leyou.auth.config.JwtProperties;
 import com.leyou.auth.service.AuthService;
+import com.leyou.common.pojo.UserInfo;
 import com.leyou.common.utils.CookieUtils;
+import com.leyou.common.utils.JwtUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,6 +12,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -52,4 +56,37 @@ public class AuthController {
 
         return ResponseEntity.ok(null);
     }
+
+    @GetMapping("verify")
+    public ResponseEntity<UserInfo> verify(
+            @CookieValue("LEYOU_TOKEN") String token,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+
+        try {
+//          解析token  从token中获取信息
+            UserInfo user = JwtUtils.getInfoFromToken(token, this.jwtProperties.getPublicKey());
+
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+
+//            verify之后要重新设置过期时间
+//            刷新jwt中的有效时间 本质上就是生成一个新的token 使用私钥生成一个token并设置过期时间
+            token = JwtUtils.generateToken(user, this.jwtProperties.getPrivateKey(), this.jwtProperties.getExpire());
+
+//            刷新cookie中的有效时间 本质上就是生成一个新的
+            CookieUtils.setCookie(request, response, this.jwtProperties.getCookieName(), token, this.jwtProperties.getExpire() * 60);
+
+//            解析成功返回用户信息
+            return ResponseEntity.ok(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //try体中的第一句异常时会执行这一句
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+
 }

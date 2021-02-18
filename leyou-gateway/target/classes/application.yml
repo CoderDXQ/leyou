@@ -20,6 +20,20 @@ zuul:
     user-service: /user/** #用户微服务
     auth-service: /auth/** #授权中心微服务
   add-host-header: true
+  sensitive-headers:  #覆盖默认敏感头信息
+
+leyou:
+  jwt:
+    pubKeyPath:  /Users/duanxiangqing/Desktop/leyoucode/rsa/rsa.pub # 公钥地址
+    cookieName: LEYOU_TOKEN # cookie的名称 leyou_token
+  filter:
+    allowPaths: #白名单
+      - /api/auth
+      - /api/search
+      - /api/user/register
+      - /api/user/check
+      - /api/user/code
+      - /api/item
 
 
 #

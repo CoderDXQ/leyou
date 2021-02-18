@@ -1,7 +1,6 @@
-package com.leyou.config;
+package com.leyou.gateway.config;
 
 
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -25,11 +24,6 @@ public class LeyouCorsConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
 //        设置允许的域
         configuration.addAllowedOrigin("http://manage.leyou.com");
-        configuration.addAllowedOrigin("http://www.leyou.com");
-        configuration.addAllowedOrigin("http://api.leyou.com");
-//        configuration.addAllowedOrigin("http://127.0.0.1");
-//        configuration.addAllowedOrigin("*");
-
 //        是否允许携带cookie
         configuration.setAllowCredentials(true);
 //        允许所有请求方法
@@ -44,12 +38,5 @@ public class LeyouCorsConfiguration {
         CorsFilter corsFilter = new CorsFilter(configurationSource);
         return corsFilter;
     }
-
-//    @Bean
-//    public RouteDefinitionLocator discoveryClientRouteDefinitionLocator(DiscoveryClient discoveryClient,
-//                                                                        DiscoveryLocatorProperties properties) {
-//        return new DiscoveryClientRouteDefinitionLocator(discoveryClient, properties);
-//    }
-
 
 }
