@@ -20,7 +20,7 @@ public class LeyouWebMvcConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+//        添加拦截规则 添加拦截器实现类和拦截路径
         registry.addInterceptor(loginInterceptor).addPathPatterns("/**");//拦截所有路径
-
     }
 }

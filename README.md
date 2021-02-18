@@ -1,6 +1,12 @@
 # leyou
 
 ## Question:
+
+???添加购物车的url不知道如何拼凑
+
+？？？登录状态下加入购物车没调通 相关信息记录在微信里
+
+
 1. 大部分功能只有查询，尝试把增删改查补全  可能要写mapper.xml或者写mapper接口也行
 
 2. 完成作业中的功能 https://github.com/ohmyray/leyou

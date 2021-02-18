@@ -25,7 +25,7 @@ zuul:
 
 leyou:
   jwt:
-    pubKeyPath:  /Users/duanxiangqing/Desktop/leyoucode/rsa/rsa.pub # 公钥地址
+    pubKeyPath: /Users/duanxiangqing/Desktop/leyoucode/rsa/rsa.pub # 公钥地址
     cookieName: LEYOU_TOKEN # cookie的名称 leyou_token
   filter:
     allowPaths: #白名单

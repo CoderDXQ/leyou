@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  * @version 1.0
  * @date 2021/2/19 12:17 上午
  */
-//拦截器
+//拦截器 作用是解析token获得用户信息，解析成功放行，解析失败则拦截
 @Component
 @EnableConfigurationProperties(JwtProperties.class)
 public class LoginInterceptor extends HandlerInterceptorAdapter {
