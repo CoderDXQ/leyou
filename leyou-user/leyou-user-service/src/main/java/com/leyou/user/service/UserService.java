@@ -84,4 +84,27 @@ public class UserService {
         user.setCreated(new Date());
         this.userMapper.insertSelective(user);
     }
+
+    public User queryUser(String username, String password) {
+        User record = new User();
+        record.setUsername(username);
+//        查询数据库
+        User user = this.userMapper.selectOne(record);
+
+//        判断user是否为空
+        if (user == null) {
+            return null;
+        }
+
+//        获取盐，对用户输入的密码加盐加密
+        password = CodecUtils.md5Hex(password, user.getSalt());
+
+//        和数据库中的密码进行比较
+        if (StringUtils.equals(password, user.getPassword())) {
+            return user;
+        }
+        return null;
+    }
+
+
 }

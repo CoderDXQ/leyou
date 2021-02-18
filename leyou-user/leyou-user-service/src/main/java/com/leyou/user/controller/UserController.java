@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import sun.nio.cs.US_ASCII;
 
 import javax.validation.Valid;
 
@@ -48,6 +49,16 @@ public class UserController {
     public ResponseEntity<Void> register(@Valid User user, @RequestParam("code") String code) {
         this.userService.register(user, code);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    //使用postman发get请求到 localhost:8085/query?username=liuyang&password=123456
+    @GetMapping("query")
+    public ResponseEntity<User> queryUser(@RequestParam("username") String username, @RequestParam("password") String password) {
+        User user = this.userService.queryUser(username, password);
+        if (user == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(user);
     }
 
 
