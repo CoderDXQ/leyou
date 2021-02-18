@@ -3,12 +3,14 @@ package com.leyou.user.service;
 import com.leyou.common.utils.NumberUtils;
 import com.leyou.user.mapper.UserMapper;
 import com.leyou.user.pojo.User;
+import com.leyou.user.utils.CodecUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -53,18 +55,33 @@ public class UserService {
         if (StringUtils.isBlank(phone)) {
             return;
         }
-
 //        生成验证码
         String code = NumberUtils.generateCode(6);
-
-//        发送消息到RabbitMQ
+        System.out.println("phone: " + phone + " code: " + code);
+//        发送消息到RabbitMQ 用于给用户发送
         Map<String, String> msg = new HashMap<>();
         msg.put("phone", phone);
         msg.put("code", code);
         this.amqpTemplate.convertAndSend("leyou.sms.exchange", "verifycode.sms", msg);
-
-//        把验证码保存到Redis中
+//        把验证码保存到Redis中 用于验证用户填写的验证码是否正确
         this.redisTemplate.opsForValue().set(KEY_PREFIX + phone, code, 5, TimeUnit.MINUTES);
     }
 
+    public void register(User user, String code) {
+//        查询Redis中的验证码
+        String redisCode = this.redisTemplate.opsForValue().get(KEY_PREFIX + user.getPhone());
+//        校验验证码
+        if (!StringUtils.equals(code, redisCode)) {
+            return;
+        }
+//        生成盐
+        String salt = CodecUtils.generateSalt();
+        user.setSalt(salt);
+//        加盐加密 对密码进行加密
+        user.setPassword(CodecUtils.md5Hex(user.getPassword(), salt));
+//        新增用户 最终要写入数据库
+        user.setId(null);
+        user.setCreated(new Date());
+        this.userMapper.insertSelective(user);
+    }
 }
