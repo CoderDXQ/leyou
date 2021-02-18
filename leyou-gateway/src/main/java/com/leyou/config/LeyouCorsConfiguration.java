@@ -24,11 +24,11 @@ public class LeyouCorsConfiguration {
 //        初始化配置类
         CorsConfiguration configuration = new CorsConfiguration();
 //        设置允许的域
-//        configuration.addAllowedOrigin("http://manage.leyou.com");
-//        configuration.addAllowedOrigin("http://www.leyou.com");
-//        configuration.addAllowedOrigin("http://api.leyou.com");
+        configuration.addAllowedOrigin("http://manage.leyou.com");
+        configuration.addAllowedOrigin("http://www.leyou.com");
+        configuration.addAllowedOrigin("http://api.leyou.com");
 //        configuration.addAllowedOrigin("http://127.0.0.1");
-        configuration.addAllowedOrigin("*");
+//        configuration.addAllowedOrigin("*");
 
 //        是否允许携带cookie
         configuration.setAllowCredentials(true);
