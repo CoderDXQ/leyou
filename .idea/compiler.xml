@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="leyou-order" />
         <module name="leyou-search" />
         <module name="leyou-user-interface" />
         <module name="leyou-item-interface" />
@@ -24,6 +25,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="leyou-order-interface" target="1.8" />
+      <module name="leyou-order-service" target="1.8" />
       <module name="ly-api-gateway" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -38,6 +41,9 @@
       <module name="leyou-item" options="-parameters" />
       <module name="leyou-item-interface" options="-parameters" />
       <module name="leyou-item-service" options="-parameters" />
+      <module name="leyou-order" options="-parameters" />
+      <module name="leyou-order-interface" options="-parameters" />
+      <module name="leyou-order-service" options="-parameters" />
       <module name="leyou-registry" options="-parameters" />
       <module name="leyou-search" options="-parameters" />
       <module name="leyou-sms-service" options="-parameters" />
