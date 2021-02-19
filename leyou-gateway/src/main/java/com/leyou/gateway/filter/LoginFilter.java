@@ -85,8 +85,11 @@ public class LoginFilter extends ZuulFilter {
 //        System.out.println(request);
 //        System.out.println();
 
-//        获取token
+//        ???问题出现在这里
+//        获取token  发postman进行测试，发现token为null
+        System.out.println(request.getCookies());
         String token = CookieUtils.getCookieValue(request, this.jwtProperties.getCookieName());
+        System.out.println(token);
 
         if (StringUtils.isBlank(token)) {
             context.setSendZuulResponse(false);
@@ -95,7 +98,7 @@ public class LoginFilter extends ZuulFilter {
 
 //        校验
         try {
-//            进行校验
+//            进行校验 发postman进行测试，发现token为null
             JwtUtils.getInfoFromToken(token, this.jwtProperties.getPublicKey());
         } catch (Exception e) {
             e.printStackTrace();

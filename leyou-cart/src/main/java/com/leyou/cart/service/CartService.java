@@ -11,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Duan Xiangqing
@@ -27,7 +31,7 @@ public class CartService {
     @Autowired
     private GoodsClient goodsClient;
 
-    private static final String KEY_PREFIX = "user:cart";
+    private static final String KEY_PREFIX = "user:cart:";
 
     public void addCart(Cart cart) {
 
@@ -60,6 +64,33 @@ public class CartService {
         }
         //            更新到Redis  put的是序列化的内容
         hashOperations.put(key, JsonUtils.serialize(cart));
+    }
+
+
+    public List<Cart> queryCarts() {
+
+        UserInfo userInfo = LoginInterceptor.getUserInfo();
+
+//        判断用户是否有购物车记录
+        if (!this.redisTemplate.hasKey(KEY_PREFIX + userInfo.getId())) {
+            return null;
+        }
+
+//        获取用户的购物车记录
+        BoundHashOperations<String, Object, Object> hashOperations = this.redisTemplate.boundHashOps(KEY_PREFIX + userInfo.getId());
+
+//        获取购物车Map中所有Cart值的集合
+        List<Object> cartsJson = hashOperations.values();
+
+//        如果购物车集合为空，直接返回null
+        if (CollectionUtils.isEmpty(cartsJson)) {
+            return null;
+        }
+
+//        把List<Object>集合转化为List<Cart>集合
+        return cartsJson.stream().map(cartJson -> JsonUtils.parse(cartJson.toString(), Cart.class)).collect(Collectors.toList());
+
+
     }
 
 
