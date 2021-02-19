@@ -10,8 +10,8 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@Configuration
-@EnableSwagger2
+@Configuration//声明这是一个配置类
+@EnableSwagger2//启动Swagger 用于自动生成文档
 public class SwaggerConfig {
 
     @Bean
