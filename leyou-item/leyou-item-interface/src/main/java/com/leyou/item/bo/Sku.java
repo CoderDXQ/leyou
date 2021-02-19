@@ -14,8 +14,8 @@ import java.util.Date;
 @Data
 @Table(name = "tb_sku")
 public class Sku {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id//标记主键
+    @GeneratedValue(strategy = GenerationType.IDENTITY)//声明主键生成策略
     private Long id;
     private Long spuId;
     private String title;
