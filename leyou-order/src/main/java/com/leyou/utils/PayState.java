@@ -1,7 +1,8 @@
 package com.leyou.utils;
 
+//这是个枚举类
 public enum PayState {
-    NOT_PAY(0),SUCCESS(1),FAIL(2);
+    NOT_PAY(0), SUCCESS(1), FAIL(2);
 
     PayState(int value) {
         this.value = value;

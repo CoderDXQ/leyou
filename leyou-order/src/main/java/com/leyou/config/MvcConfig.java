@@ -20,7 +20,7 @@ public class MvcConfig implements WebMvcConfigurer {
         return new LoginInterceptor(jwtProperties);
     }
 
-    @Override
+    @Override  //拦截器
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor())
                 .addPathPatterns("/order/**");

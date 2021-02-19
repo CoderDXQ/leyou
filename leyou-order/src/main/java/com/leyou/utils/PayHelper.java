@@ -64,6 +64,7 @@ public class PayHelper {
             //商品id,使用假数据
             data.put("product_id", "1234567");
 
+//            调用微信支付接口并接收返回值 内含url
             Map<String, String> result = this.wxPay.unifiedOrder(data);
 
             if ("SUCCESS".equals(result.get("return_code"))) {
@@ -96,6 +97,7 @@ public class PayHelper {
         // 订单号
         data.put("out_trade_no", orderId.toString());
         try {
+            //调用微信支付接口查询订单状态并接收返回值 内含
             Map<String, String> result = this.wxPay.orderQuery(data);
             if (result == null) {
                 // 未查询到结果，认为是未付款
@@ -104,7 +106,6 @@ public class PayHelper {
             String state = result.get("trade_state");
             if ("SUCCESS".equals(state)) {
                 // success，则认为付款成功
-
                 // 修改订单状态
                 this.orderService.updateStatus(orderId, 2);
                 return PayState.SUCCESS;

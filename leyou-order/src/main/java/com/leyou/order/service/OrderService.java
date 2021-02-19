@@ -50,7 +50,7 @@ public class OrderService {
         order.setCreateTime(new Date());
         order.setOrderId(orderId);
         order.setUserId(user.getId());
-        // 保存数据
+        // 保存数据 订单信息存入数据库
         this.orderMapper.insertSelective(order);
 
         // 保存订单状态
@@ -59,6 +59,7 @@ public class OrderService {
         orderStatus.setCreateTime(order.getCreateTime());
         orderStatus.setStatus(1);// 初始状态为未付款
 
+//        订单状态信息也存入数据库
         this.statusMapper.insertSelective(orderStatus);
 
         // 订单详情中添加orderId
@@ -75,7 +76,7 @@ public class OrderService {
         // 查询订单
         Order order = this.orderMapper.selectByPrimaryKey(id);
 
-        // 查询订单详情
+        // 查询订单详情 订单详情是个表
         OrderDetail detail = new OrderDetail();
         detail.setOrderId(id);
         List<OrderDetail> details = this.detailMapper.select(detail);
@@ -91,7 +92,7 @@ public class OrderService {
         try {
             // 分页
             PageHelper.startPage(page, rows);
-            // 获取登录用户
+            // 获取登录用户 可以从拦截器直接获取
             UserInfo user = LoginInterceptor.getLoginUser();
             // 创建查询条件
             Page<Order> pageInfo = (Page<Order>) this.orderMapper.queryOrderList(user.getId(), status);
@@ -105,6 +106,7 @@ public class OrderService {
 
     @Transactional
     public Boolean updateStatus(Long id, Integer status) {
+//        创建一个新的记录 准备更新数据库
         OrderStatus record = new OrderStatus();
         record.setOrderId(id);
         record.setStatus(status);

@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface OrderMapper extends Mapper<Order> {
 
+    //    具体实现在OrderMapper.xml中
     List<Order> queryOrderList(
             @Param("userId") Long userId,
             @Param("status") Integer status);
