@@ -220,6 +220,10 @@ public class GoodsService {
     }
 
     public Sku querySkuBySkuId(Long skuId) {
-        return this.skuMapper.selectByPrimaryKey(skuId);
+        System.out.println("进入Service层");
+        System.out.println("skuId: " + skuId);
+        Sku sku = this.skuMapper.selectByPrimaryKey(skuId);
+        System.out.println("sku: " + sku.toString());
+        return sku;
     }
 }

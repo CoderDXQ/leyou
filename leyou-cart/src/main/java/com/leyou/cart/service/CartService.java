@@ -59,6 +59,9 @@ public class CartService {
             cart.setNum(cart.getNum() + num);
         } else {
             //        不在，新增购物车
+            System.out.println("即将查询数据库");
+            System.out.println(cart.getSkuId());
+            //问题就出在这里
             Sku sku = this.goodsClient.querySkuBySkuId(cart.getSkuId());
 
             System.out.println("数据库中的sku: " + sku.toString());

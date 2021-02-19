@@ -85,8 +85,8 @@ public class LoginFilter extends ZuulFilter {
 //        System.out.println(request);
 //        System.out.println();
 
-//        ???问题出现在这里
-//        获取token  发postman进行测试，发现token为null
+//        获取token  发postman进行测试，发现token为null 原因是没有Cookie 在发postman时先发送POST请求到 http://api.leyou.com/api/auth/accredit?username=liuyang&password=123456
+//       后面再发其他请求就都会自动包含Cookie
         System.out.println("Cookie : " + request.getCookies());
         String token = CookieUtils.getCookieValue(request, this.jwtProperties.getCookieName());
         System.out.println("token : " + token);

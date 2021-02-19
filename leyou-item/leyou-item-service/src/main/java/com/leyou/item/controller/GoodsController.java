@@ -103,6 +103,7 @@ public class GoodsController {
 
     @GetMapping("sku/{skuId}")
     public ResponseEntity<Sku> querySkuBySkuId(@PathVariable("skuId") Long skuId) {
+        System.out.println("进入Controller层");
         Sku sku = this.goodsService.querySkuBySkuId(skuId);
         if (sku == null) {
             return ResponseEntity.notFound().build();

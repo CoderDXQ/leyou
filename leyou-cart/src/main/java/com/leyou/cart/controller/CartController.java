@@ -5,7 +5,6 @@ import com.leyou.cart.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +16,16 @@ import java.util.List;
  * @date 2021/2/19 1:49 上午
  */
 
-@Controller
+//@Controller
+@RestController
+@ResponseBody
 public class CartController {
 
     @Autowired
     private CartService cartService;
 
+    //    发送请求POST请求到 http://api.leyou.com/api/cart 配置Body中的参数  设置skuId为2600242
+//    在此之前发送POST请求到 http://api.leyou.com/api/auth/accredit?username=liuyang&password=123456 以获得Cookie
     @PostMapping
     public ResponseEntity<Void> addCart(@RequestBody Cart cart) {
         this.cartService.addCart(cart);
