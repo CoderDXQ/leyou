@@ -82,7 +82,7 @@
  1. 本项目运行过程中所有生成或者存储的文件路径均与源工程同级。
  
  2. 文档地址：https://github.com/ohmyray/leyou
-    参考代码：https://github.com/mundane799699/leyou
+    参考代码（包含前后端和portal）：https://github.com/mundane799699/leyou
  
  
     

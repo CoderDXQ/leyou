@@ -35,8 +35,12 @@ public class CartService {
 
     public void addCart(Cart cart) {
 
+        System.out.println();
+        System.out.println("addCart()方法中的传入的cart对象信息：" + cart.toString());
+
 //        获取用户信息 拦截器中已经解析好，不需要再重复解析
         UserInfo userInfo = LoginInterceptor.getUserInfo();
+        System.out.println("拦截器中userInfo：" + userInfo.toString());
 
 //        查询购物车记录
 //        获取hash操作对象
@@ -56,6 +60,9 @@ public class CartService {
         } else {
             //        不在，新增购物车
             Sku sku = this.goodsClient.querySkuBySkuId(cart.getSkuId());
+
+            System.out.println("数据库中的sku: " + sku.toString());
+
             cart.setUserId(userInfo.getId());
             cart.setTitle(sku.getTitle());
             cart.setOwnSpec(sku.getOwnSpec());
@@ -126,7 +133,6 @@ public class CartService {
 //        删除 购物车记录目前只在Redis中，因此不需要删除数据库
         hashOperations.delete(skuId);
     }
-
 
 
 }
