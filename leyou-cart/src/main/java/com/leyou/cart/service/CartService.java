@@ -93,5 +93,40 @@ public class CartService {
 
     }
 
+    //更新购物车中商品的数量
+    public void updateNum(Cart cart) {
+//        获取登录的用户是谁
+        UserInfo userInfo = LoginInterceptor.getUserInfo();
+//        判断用户是否有购物车记录 没有就直接返回
+        if (!this.redisTemplate.hasKey(KEY_PREFIX + userInfo.getId())) {
+            return;
+        }
+//        获取更新后的购物车中商品的数量 下面会给cart重新赋值
+        Integer num = cart.getNum();
+//        获取用户的购物车记录
+        BoundHashOperations<String, Object, Object> hashOperations = this.redisTemplate.boundHashOps(KEY_PREFIX + userInfo.getId());
+//        第一个toString()是 BoundHashOperations中的第一个参数的类型是String，第二个toString()是将结果转化为String类型
+        String cartJson = hashOperations.get(cart.getSkuId().toString()).toString();
+//        反序列化 反序列化之后才能使用getter setter方法 cart被重新赋值了 cart变为Redis中的数据
+        cart = JsonUtils.parse(cartJson, Cart.class);
+//        更新数量 数量在传过来的cart中
+        cart.setNum(num);
+//        Redis存储 Redis中存储的是序列化的数据 就是字符串
+        hashOperations.put(cart.getSkuId().toString(), JsonUtils.serialize(cart));
+    }
+
+    //    从购物车中删除商品
+    public void deleteCart(String skuId) {
+//        获取登录的用户信息
+        UserInfo userInfo = LoginInterceptor.getUserInfo();
+//        获取Redis中的KEY值
+        String key = KEY_PREFIX + userInfo.getId();
+//        获取Redis的操作对象
+        BoundHashOperations<String, Object, Object> hashOperations = this.redisTemplate.boundHashOps(key);
+//        删除 购物车记录目前只在Redis中，因此不需要删除数据库
+        hashOperations.delete(skuId);
+    }
+
+
 
 }
