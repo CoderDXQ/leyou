@@ -78,11 +78,14 @@
  1. 本项目运行过程中所有生成或者存储的文件路径均与源工程同级。
  
  2. 文档地址：https://github.com/ohmyray/leyou
+ 
     项目详细介绍：https://blog.csdn.net/lyj2018gyq/category_7963560.html
+    
     参考代码（包含前后端和portal）：https://github.com/mundane799699/leyou
+    
     带秒杀的参考代码：https://github.com/lyj8330328/leyou
  
-    
+    配置单参考：https://github.com/CoderDXQ/leyou-config
 
    
    
