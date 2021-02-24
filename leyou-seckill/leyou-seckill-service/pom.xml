@@ -119,36 +119,38 @@
         </dependency>
 
     </dependencies>
-    <build>
-        <finalName>app</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <!-- docker的maven插件，官网 https://github.com/spotify/docker-maven-plugin -->
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>0.4.13</version>
-                <configuration>
-                    <!-- ？？？ IP地址暂时写这个 下面也是这个 -->
-                    <imageName>10.108.163.120:5000/${project.artifactId}:${project.version}</imageName>
-                    <baseImage>jdk1.8</baseImage>
-                    <entryPoint>["java", "-jar","/${project.build.finalName}.jar"]</entryPoint>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
-                    <!-- ？？？ IP地址暂时写这个 -->
-                    <dockerHost>http://10.108.163.120:2375</dockerHost>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+
+<!--    暂时不启用jenkins 注掉-->
+<!--    <build>-->
+<!--        <finalName>app</finalName>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--            </plugin>-->
+<!--            &lt;!&ndash; docker的maven插件，官网 https://github.com/spotify/docker-maven-plugin &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>com.spotify</groupId>-->
+<!--                <artifactId>docker-maven-plugin</artifactId>-->
+<!--                <version>0.4.13</version>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash; ？？？ IP地址暂时写这个 下面也是这个 &ndash;&gt;-->
+<!--                    <imageName>10.108.163.120:5000/${project.artifactId}:${project.version}</imageName>-->
+<!--                    <baseImage>jdk1.8</baseImage>-->
+<!--                    <entryPoint>["java", "-jar","/${project.build.finalName}.jar"]</entryPoint>-->
+<!--                    <resources>-->
+<!--                        <resource>-->
+<!--                            <targetPath>/</targetPath>-->
+<!--                            <directory>${project.build.directory}</directory>-->
+<!--                            <include>${project.build.finalName}.jar</include>-->
+<!--                        </resource>-->
+<!--                    </resources>-->
+<!--                    &lt;!&ndash; ？？？ IP地址暂时写这个 &ndash;&gt;-->
+<!--                    <dockerHost>http://10.108.163.120:2375</dockerHost>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 
 
 </project>
