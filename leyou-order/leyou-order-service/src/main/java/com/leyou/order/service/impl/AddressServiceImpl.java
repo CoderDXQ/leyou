@@ -1,6 +1,7 @@
 package com.leyou.order.service.impl;
 
-import com.leyou.auth.entity.UserInfo;
+
+import com.leyou.common.pojo.UserInfo;
 import com.leyou.order.interceptor.LoginInterceptor;
 import com.leyou.order.mapper.AddressMapper;
 import com.leyou.order.pojo.Address;

@@ -1,6 +1,7 @@
 package com.leyou.order.mapper;
 
-import com.leyou.item.pojo.Sku;
+
+import com.leyou.item.bo.Sku;
 import tk.mybatis.mapper.common.Mapper;
 
 /**

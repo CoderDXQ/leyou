@@ -9,21 +9,21 @@ import org.springframework.context.annotation.Configuration;
  * @author: 98050
  * @create: 2018-10-27
  **/
-//@ConfigurationProperties(prefix = "leyou.worker")
-@Configuration
-@RefreshScope
+@ConfigurationProperties(prefix = "leyou.worker")
+//@Configuration
+//@RefreshScope
 public class IdWorkerProperties {
 
     /**
      * 当前机器id
      */
-    @Value("${leyou.worker.workerId}")
+//    @Value("${leyou.worker.workerId}")
     private long workerId;
 
     /**
      * 序列号
      */
-    @Value("${leyou.worker.dataCenterId}")
+//    @Value("${leyou.worker.dataCenterId}")
     private long dataCenterId;
 
     public long getWorkerId() {

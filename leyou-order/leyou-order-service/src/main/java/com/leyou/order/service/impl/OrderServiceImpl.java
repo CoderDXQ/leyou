@@ -265,18 +265,18 @@ public class OrderServiceImpl implements OrderService {
      * @param order
      * @return
      */
-    @Override
-    public List<Long> queryStock(Order order) {
-        List<Long> skuId = new ArrayList<>();
-        order.getOrderDetails().forEach(orderDetail -> {
-            Stock stock = this.stockMapper.selectByPrimaryKey(orderDetail.getSkuId());
-            if (stock.getStock() - orderDetail.getNum() < 0) {
-                //先判断库存是否充足
-                skuId.add(orderDetail.getSkuId());
-            }
-        });
-        return skuId;
-    }
+//    @Override
+//    public List<Long> queryStock(Order order) {
+//        List<Long> skuId = new ArrayList<>();
+//        order.getOrderDetails().forEach(orderDetail -> {
+//            Stock stock = this.stockMapper.selectByPrimaryKey(orderDetail.getSkuId());
+//            if (stock.getStock() - orderDetail.getNum() < 0) {
+//                //先判断库存是否充足
+//                skuId.add(orderDetail.getSkuId());
+//            }
+//        });
+//        return skuId;
+//    }
 
     /**
      * 根据订单id查询其skuId

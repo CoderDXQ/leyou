@@ -1,9 +1,8 @@
 package com.leyou.order.service.impl;
 
+import com.leyou.common.utils.JsonUtils;
 import com.leyou.order.service.OrderStatusService;
-import com.leyou.order.vo.CommentsParameter;
 import com.leyou.order.vo.OrderStatusMessage;
-import com.leyou.utils.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.*;
@@ -51,14 +50,14 @@ public class OrderStatusServiceImpl implements OrderStatusService {
     /**
      * 将评论发送到消息队列中
      * @param commentsParameter
-     */
-    @Override
-    public void sendComments(CommentsParameter commentsParameter) {
-        String json = JsonUtils.serialize(commentsParameter);
-        try {
-            this.amqpTemplate.convertAndSend("leyou.comments.exchange","user.comments", json);
-        }catch (Exception e){
-            LOGGER.error("评论消息发送异常，订单id：{}",commentsParameter.getOrderId(),e);
-        }
-    }
+//     */
+//    @Override
+//    public void sendComments(CommentsParameter commentsParameter) {
+//        String json = JsonUtils.serialize(commentsParameter);
+//        try {
+//            this.amqpTemplate.convertAndSend("leyou.comments.exchange","user.comments", json);
+//        }catch (Exception e){
+//            LOGGER.error("评论消息发送异常，订单id：{}",commentsParameter.getOrderId(),e);
+//        }
+//    }
 }
