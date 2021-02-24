@@ -187,7 +187,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Boolean updateOrderStatus(Long id, Integer status) {
         UserInfo userInfo = LoginInterceptor.getLoginUser();
-        Long spuId = this.goodsClient.querySkuById(findSkuIdByOrderId(id)).getSpuId();
+//        修改为下面的一行
+//        Long spuId = this.goodsClient.querySkuById(findSkuIdByOrderId(id)).getSpuId();
+        Long spuId = this.goodsClient.querySkuBySkuId(findSkuIdByOrderId(id)).getSpuId();
 
         OrderStatus orderStatus = new OrderStatus();
         orderStatus.setOrderId(id);
