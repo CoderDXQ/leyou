@@ -1,5 +1,6 @@
 package com.leyou.seckill.client;
 
+import com.leyou.order.api.OrderApi;
 import com.leyou.order.pojo.Order;
 import com.leyou.seckill.config.OrderConfig;
 import org.springframework.cloud.openfeign.FeignClient;

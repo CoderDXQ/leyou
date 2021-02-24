@@ -24,7 +24,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping
-public class SeckillController implements InitializingBean {
+public class SeckillController  {
 
     @Autowired
     private SeckillService seckillService;
