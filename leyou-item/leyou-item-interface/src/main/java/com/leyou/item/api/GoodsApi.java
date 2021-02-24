@@ -3,6 +3,7 @@ package com.leyou.item.api;
 import com.leyou.common.pojo.PageResult;
 import com.leyou.item.bo.Sku;
 import com.leyou.item.bo.SpuBo;
+import com.leyou.item.pojo.SeckillGoods;
 import com.leyou.item.pojo.Spu;
 import com.leyou.item.pojo.SpuDetail;
 import org.springframework.http.HttpStatus;
@@ -52,6 +53,10 @@ public interface GoodsApi {
 
     @GetMapping("sku/{skuId}")
     public Sku querySkuBySkuId(@PathVariable("skuId") Long skuId);
+
+    //???返回值可能有错误
+    @GetMapping("/seckill/list")
+    public ResponseEntity<List<SeckillGoods>> querySeckillGoods();
 
 
 }

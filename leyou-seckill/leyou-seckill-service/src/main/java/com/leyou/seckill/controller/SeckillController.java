@@ -1,10 +1,15 @@
 package com.leyou.seckill.controller;
 
+import com.leyou.item.pojo.SeckillGoods;
 import com.leyou.seckill.client.GoodsClient;
 import com.leyou.seckill.service.SeckillService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,9 +45,21 @@ public class SeckillController implements InitializingBean {
      *
      * @throws Exception
      */
-    @Override
-    public void afterPropertiesSet() throws Exception {
+//    @Override
+//    public void afterPropertiesSet() throws Exception {
+//
+//    }
+    @PostMapping("seck")
+    public ResponseEntity<Long> seckillOrder(@RequestBody SeckillGoods seckillGoods) {
+//        创建订单
+        Long id = this.seckillService.createOrder(seckillGoods);
 
+//        判断是否秒杀成功
+        if (id == null) {
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        }
+        return ResponseEntity.ok(id);
     }
+
 
 }

@@ -1,6 +1,11 @@
 package com.leyou.seckill.client;
 
+import com.leyou.order.pojo.Order;
+import com.leyou.seckill.config.OrderConfig;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 /**
  * @author Duan Xiangqing
@@ -9,6 +14,7 @@ import org.springframework.cloud.openfeign.FeignClient;
  */
 
 //???  需要改leyou-order服务
-@FeignClient(value = "")
-public interface OrderClient {
+@FeignClient(value = "order-service", configuration = OrderConfig.class)
+public interface OrderClient extends OrderApi {
+
 }

@@ -4,6 +4,7 @@ import com.leyou.common.pojo.PageResult;
 import com.leyou.item.bo.SeckillParameter;
 import com.leyou.item.bo.Sku;
 import com.leyou.item.bo.SpuBo;
+import com.leyou.item.pojo.SeckillGoods;
 import com.leyou.item.pojo.Spu;
 import com.leyou.item.pojo.SpuDetail;
 import com.leyou.item.service.GoodsService;
@@ -124,6 +125,16 @@ public class GoodsController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
         return ResponseEntity.ok().build();
+    }
+
+    //    查询秒杀商品  ???可能不需要最前面的"/"
+    @GetMapping("/seckill/list")
+    public ResponseEntity<List<SeckillGoods>> querySeckillGoods() {
+        List<SeckillGoods> list = this.goodsService.querySeckillGoods();
+        if (list == null || list.size() < 0) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(list);
     }
 
 

@@ -70,7 +70,7 @@ public class OrderDetail {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

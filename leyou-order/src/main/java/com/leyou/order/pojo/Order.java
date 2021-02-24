@@ -54,7 +54,7 @@ public class Order {
         return totalPay;
     }
 
-    public void setTotalPay(Long totalPay) {
+    public void setTotalPay(Double totalPay) {
         this.totalPay = totalPay;
     }
 
@@ -62,7 +62,7 @@ public class Order {
         return actualPay;
     }
 
-    public void setActualPay(Long actualPay) {
+    public void setActualPay(Double actualPay) {
         this.actualPay = actualPay;
     }
 
