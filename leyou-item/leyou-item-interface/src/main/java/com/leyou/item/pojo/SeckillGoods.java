@@ -1,11 +1,14 @@
 package com.leyou.item.pojo;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.Date;
 
@@ -16,6 +19,7 @@ import java.util.Date;
  */
 
 @Data
+@Table(name = "tb_seckill_sku")
 public class SeckillGoods {
 
     @Id

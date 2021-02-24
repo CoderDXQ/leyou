@@ -3,29 +3,34 @@ package com.leyou.item.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.leyou.common.pojo.PageResult;
+import com.leyou.item.bo.SeckillParameter;
 import com.leyou.item.bo.Sku;
 import com.leyou.item.bo.SpuBo;
 import com.leyou.item.mapper.*;
-import com.leyou.item.pojo.Brand;
-import com.leyou.item.pojo.Spu;
-import com.leyou.item.pojo.SpuDetail;
-import com.leyou.item.pojo.Stock;
+import com.leyou.item.pojo.*;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.BoundHashOperations;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.w3c.dom.ls.LSInput;
 import tk.mybatis.mapper.entity.Example;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -57,6 +62,17 @@ public class GoodsService {
 
     @Autowired
     private AmqpTemplate amqpTemplate;
+
+    @Autowired
+    private SeckillMapper seckillMapper;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    private static final String KEY_PREFIX = "leyou:seckill:stock";
+
+    //    ？？？日志这一块可能有问题
+    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(GoodsService.class);
 
 
     //    saleable是否上架  分页查询的条件和规则是多样的 对应场景是商城的大的搜索页面（可以设置搜索条件和排序方式等） 然后分页进行展示
@@ -226,4 +242,77 @@ public class GoodsService {
         System.out.println("sku: " + sku.toString());
         return sku;
     }
+
+    //    ???暂时没有在leyou-item-interface中的api中声明
+    @Transactional(rollbackFor = Exception.class)
+    public void addSeckillGoods(SeckillParameter seckillParameter) throws ParseException {
+
+//        时间格式化
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//        查询商品
+        Long id = seckillParameter.getId();
+        Sku sku = this.querySkuBySkuId(id);
+//        插入数据库
+        SeckillGoods seckillGoods = new SeckillGoods();
+
+        seckillGoods.setEnable(true);
+        seckillGoods.setStartTime(sdf.parse(seckillParameter.getStartTime().trim()));
+        seckillGoods.setEndTime(sdf.parse(seckillParameter.getEndTime().trim()));
+        seckillGoods.setImage(sku.getImages());
+        seckillGoods.setSkuId(sku.getId());
+        seckillGoods.setStock(seckillParameter.getCount());
+        seckillGoods.setTitle(sku.getTitle());
+        seckillGoods.setSeckillPrice((double) (sku.getPrice() * seckillParameter.getCount()));
+        this.seckillMapper.insert(seckillGoods);
+//        更新库存 操作数据库
+//        查询数据库中的库存
+        Stock stock = stockMapper.selectByPrimaryKey(sku.getId());
+        System.out.println(stock);
+        if (stock != null) {
+//          stock是数据库中的库存 seckillParameter是前端传过来的库存，即新增的库存  新的秒杀库存等于原来的秒杀库存加上新增的秒杀库存
+            stock.setSeckillStock(stock.getSeckillStock() != null ? stock.getSeckillStock() + seckillParameter.getCount() : seckillParameter.getCount());
+            stock.setSeckillTotal(stock.getSeckillStock() != null ? stock.getSeckillStock() + seckillParameter.getCount() : seckillParameter.getCount());
+//            新的库存是原来的库存减去新增的秒杀库存 即秒杀库存都是从原来的库存中分出来的一部分
+            stock.setStock(stock.getStock() - seckillParameter.getCount());
+            this.stockMapper.updateByPrimaryKeySelective(stock);
+
+        } else {
+            LOGGER.info("更新库存失败！");
+            System.out.println("更新库存失败！");
+        }
+
+//        更新Redis中的秒杀库存
+        updateSeckillStock();
+    }
+
+    private void updateSeckillStock() {
+        List<SeckillGoods> seckillGoods = this.querySeckillGoods();
+        if (seckillGoods == null || seckillGoods.size() == 0) {
+            return;
+        }
+//        更新的逻辑是先删除后新增
+        BoundHashOperations<String, Object, Object> hashOperations = this.stringRedisTemplate.boundHashOps(KEY_PREFIX);
+        if (hashOperations.hasKey(KEY_PREFIX)) {
+            hashOperations.delete(KEY_PREFIX);
+        }
+        seckillGoods.forEach(goods -> hashOperations.put(goods.getSkuId().toString(), goods.getStock().toString()));
+
+    }
+
+    //    查询秒杀商品
+    private List<SeckillGoods> querySeckillGoods() {
+//        设置查询条件
+        Example example = new Example(SeckillGoods.class);
+        example.createCriteria().andEqualTo("enable", true);
+        List<SeckillGoods> list = this.seckillMapper.selectByExample(example);
+        list.forEach(goods -> {
+            Stock stock = this.stockMapper.selectByPrimaryKey(goods.getSkuId());
+//            秒杀商品的库存和秒杀库存是一样的
+            goods.setStock(stock.getSeckillStock());
+            goods.setSeckillTotal(stock.getSeckillStock());
+        });
+        return list;
+    }
+
+
 }

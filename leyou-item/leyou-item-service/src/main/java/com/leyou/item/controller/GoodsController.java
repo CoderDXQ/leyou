@@ -1,6 +1,7 @@
 package com.leyou.item.controller;
 
 import com.leyou.common.pojo.PageResult;
+import com.leyou.item.bo.SeckillParameter;
 import com.leyou.item.bo.Sku;
 import com.leyou.item.bo.SpuBo;
 import com.leyou.item.pojo.Spu;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.Collections;
 import java.util.List;
 
@@ -109,6 +111,19 @@ public class GoodsController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(sku);
+    }
+
+    //    添加秒杀商品  ???可能不需要最前面的"/"
+    @PostMapping("/seckill/add")
+    public ResponseEntity<Boolean> addSeckillGoods(@RequestBody List<SeckillParameter> seckillParameters) throws ParseException {
+        if (seckillParameters != null && seckillParameters.size() > 0) {
+            for (SeckillParameter seckillParameter : seckillParameters) {
+                this.goodsService.addSeckillGoods(seckillParameter);
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.ok().build();
     }
 
 
