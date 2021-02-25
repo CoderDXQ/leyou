@@ -8,11 +8,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="leyou-order-interface" />
         <module name="leyou-search" />
+        <module name="leyou-comments-service" />
         <module name="leyou-user-interface" />
         <module name="leyou-order-service" />
         <module name="leyou-item-interface" />
         <module name="leyou-seckill-interface" />
         <module name="leyou-cart" />
+        <module name="leyou-comments-interface" />
         <module name="ly-api-gateway" />
         <module name="leyou-registry" />
         <module name="leyou-sms-service" />
@@ -36,6 +38,9 @@
       <module name="leyou-auth-common" options="-parameters" />
       <module name="leyou-auth-service" options="-parameters" />
       <module name="leyou-cart" options="-parameters" />
+      <module name="leyou-comments" options="-parameters" />
+      <module name="leyou-comments-interface" options="-parameters" />
+      <module name="leyou-comments-service" options="-parameters" />
       <module name="leyou-common" options="-parameters" />
       <module name="leyou-gateway" options="-parameters" />
       <module name="leyou-goods-web" options="-parameters" />

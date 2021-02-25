@@ -6,6 +6,10 @@
     <file url="file://$PROJECT_DIR$/leyou-auth/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/leyou-auth/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/leyou-cart/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/leyou-comments/leyou-comments-interface/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/leyou-comments/leyou-comments-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/leyou-comments/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/leyou-comments/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/leyou-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/leyou-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/leyou-goods-web/src/main/java" charset="UTF-8" />

@@ -19,6 +19,7 @@
         <module>leyou-auth</module>
         <module>leyou-cart</module>
         <module>leyou-seckill</module>
+        <module>leyou-comments</module>
     </modules>
     <packaging>pom</packaging>
 
