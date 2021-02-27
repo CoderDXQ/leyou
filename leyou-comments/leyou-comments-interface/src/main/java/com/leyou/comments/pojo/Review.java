@@ -1,6 +1,8 @@
 package com.leyou.comments.pojo;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -14,6 +16,8 @@ import java.util.List;
  */
 
 @NoArgsConstructor
+@Getter
+@Setter
 public class Review implements Serializable {
     @Id
     private String _id;
