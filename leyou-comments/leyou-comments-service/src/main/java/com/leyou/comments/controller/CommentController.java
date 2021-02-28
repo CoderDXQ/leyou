@@ -6,6 +6,7 @@ import com.leyou.comments.service.CommentService;
 import com.leyou.common.pojo.PageResult;
 import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +25,15 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    private final String THUMBUP_PREFIX = "thumbup";
+
     /**
      * 分页查询某一商品下的所有顶级评论
      */
+    @GetMapping("list")
     public ResponseEntity findReviewBySpuId(@RequestBody CommentRequestParam requestParam) {
         Page<Review> result = (Page<Review>) commentService.findReviewBySpuId(requestParam);
         if (result == null) {
@@ -39,9 +46,9 @@ public class CommentController {
         return ResponseEntity.ok(pageResult);
     }
 
-    @PostMapping
-    public ResponseEntity<Void> addReview(@RequestBody Review review) {
-        boolean result = this.commentService.add(review);
+    @PostMapping("comment/{orderId}")
+    public ResponseEntity<Void> addReview(@PathVariable("orderId") Long orderId, @RequestBody Review review) {
+        boolean result = this.commentService.add(orderId, review);
         if (!result) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
