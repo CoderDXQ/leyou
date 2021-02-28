@@ -92,7 +92,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void update(Review review) {
-
+        commentDao.save(review);
     }
 
     @Override

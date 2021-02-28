@@ -55,9 +55,15 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @DeleteMapping("/commitId/{id}")
+    @DeleteMapping("/commentId/{id}")
     public ResponseEntity<Void> deletereview(@PathVariable("id") String id) {
         this.commentService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PutMapping("/comment")
+    public ResponseEntity<Void> updateReview(@RequestBody Review review) {
+        this.commentService.update(review);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
