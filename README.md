@@ -83,6 +83,14 @@
     在部署了Redis的机器上使用`redis-server start`启动服务。
     
     或者在`/usr/local/bin`下执行二进制文件。
+    
+11. 启动MongoDB
+
+    依次执行`whereis mongod`,然后cd到第一个路径，然后执行 `./mongod`以启动MongoDB服务。
+    
+    但是推荐`service mongod start`。
+    
+    依次执行`whereis mongo`,然后直接执行第一个路径即可。
    
     
  ## 其他

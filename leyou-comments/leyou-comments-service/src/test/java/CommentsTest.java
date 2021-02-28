@@ -36,7 +36,7 @@ public class CommentsTest {
             String content = "手机不错" + i;
             String userId = (35 + i) + "";
             String nickname = "username" + i;
-            List<String> images = new ArrayList<>()；
+            List<String> images = new ArrayList<>();
             boolean iscomment = i % 2 == 0;
             String parentId = 0 + "";
             boolean isparent = true;
