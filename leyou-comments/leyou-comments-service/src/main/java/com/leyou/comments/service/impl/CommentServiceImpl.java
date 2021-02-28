@@ -5,12 +5,13 @@ import com.leyou.comments.client.OrderClient;
 import com.leyou.comments.dao.CommentDao;
 import com.leyou.comments.pojo.Review;
 import com.leyou.comments.service.CommentService;
+import com.leyou.common.pojo.PageResult;
 import com.leyou.common.utils.IdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
-import sun.jvm.hotspot.debugger.Page;
 
 /**
  * @author Duan Xiangqing
@@ -56,7 +57,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Page<Review> findReviewBySpuId(CommentRequestParam commentRequestParam) {
         PageRequest pageRequest = PageRequest.of(commentRequestParam.getPage() - 1, commentRequestParam.getDefaultSize());
-        return  this.commentDao.findReviewBySpuid(commentRequestParam.getSpuId() + "", pageRequest);
+        return this.commentDao.findReviewBySpuid(commentRequestParam.getSpuId() + "", pageRequest);
     }
 
     @Override

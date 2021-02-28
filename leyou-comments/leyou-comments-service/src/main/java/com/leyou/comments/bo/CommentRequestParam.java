@@ -30,7 +30,7 @@ public class CommentRequestParam {
         this.page = page;
     }
 
-    public static Integer getDefaultSize() {
+    public Integer getDefaultSize() {
         return DEFAULT_SIZE;
     }
 
