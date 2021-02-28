@@ -79,7 +79,7 @@ public class Review implements Serializable {
      */
     private Integer type;
 
-    public Review(String orderid, String spuid, String content, String userid, String nickname, List<String> images, Boolean iscomment, String parentid, Boolean isparent, Integer type) {
+    public Review(String orderid, String spuid, String content, String userid, List<String> images, Boolean iscomment, String parentid, Boolean isparent, Integer type) {
         this.orderid = orderid;
         this.spuid = spuid;
         this.content = content;
