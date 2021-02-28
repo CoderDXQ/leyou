@@ -26,4 +26,5 @@ public interface CommentService {
 
     boolean updateVisits(String id);
 
+    boolean add(Review review);
 }

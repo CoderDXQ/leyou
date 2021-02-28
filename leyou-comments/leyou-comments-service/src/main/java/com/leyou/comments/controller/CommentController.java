@@ -8,10 +8,7 @@ import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 
 /**
@@ -40,6 +37,15 @@ public class CommentController {
         pageResult.setItems(result.getContent());
         pageResult.setTotalPage((long) result.getTotalPages());
         return ResponseEntity.ok(pageResult);
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> addReview(@RequestBody Review review) {
+        boolean result = this.commentService.add(review);
+        if (!result) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 
