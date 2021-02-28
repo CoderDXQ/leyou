@@ -7,6 +7,7 @@ import com.leyou.comments.pojo.Review;
 import com.leyou.comments.service.CommentService;
 import com.leyou.common.pojo.PageResult;
 import com.leyou.common.utils.IdWorker;
+import com.mongodb.client.result.UpdateResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -115,7 +116,12 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public boolean updateThumbup(String id) {
-        return false;
+        Query query = new Query();
+        query.addCriteria(Criteria.where("_id").is(id));
+        Update update = new Update();
+        update.inc("thumbup", 1);
+        UpdateResult result = this.mongoTemplate.updateFirst(query, update, "review");
+        return result.isModifiedCountAvailable();
     }
 
     @Override

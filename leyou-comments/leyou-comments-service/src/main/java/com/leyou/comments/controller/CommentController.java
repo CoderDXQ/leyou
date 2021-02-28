@@ -1,10 +1,13 @@
 package com.leyou.comments.controller;
 
 import com.leyou.comments.bo.CommentRequestParam;
+import com.leyou.comments.interceptor.LoginInterceptor;
 import com.leyou.comments.pojo.Review;
 import com.leyou.comments.service.CommentService;
 import com.leyou.common.pojo.PageResult;
+import com.leyou.common.pojo.UserInfo;
 import com.netflix.discovery.converters.Auto;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
@@ -74,6 +77,24 @@ public class CommentController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(review);
+    }
+
+    @PutMapping("thumb/{id}")
+    public ResponseEntity<Boolean> updateThumbup(@PathVariable String id) {
+//        从拦截器获得用户信息
+        UserInfo userInfo = LoginInterceptor.getLoginUser();
+        String userId = userInfo.getId() + "";
+//        查询用户是否点过赞 点过赞不行
+        if (redisTemplate.opsForValue().get(THUMBUP_PREFIX + userId + "_" + id) != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+//        没点过赞的话就进行点赞
+        boolean result = this.commentService.updateThumbup(id);
+        if (!result) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        redisTemplate.opsForValue().set(THUMBUP_PREFIX + userId + "_" + id, "1");
+        return ResponseEntity.ok(result);
     }
 
 
