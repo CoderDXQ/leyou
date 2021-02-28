@@ -97,5 +97,14 @@ public class CommentController {
         return ResponseEntity.ok(result);
     }
 
+    @PutMapping("visit/{id}")
+    public ResponseEntity<Void> updateReviewVisit(@PathVariable("id") String id) {
+        boolean result = this.commentService.updateVisits(id);
+        if (!result) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 
 }

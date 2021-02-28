@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
+    //    配置类
     private JwtProperties jwtProperties;
 
     /**

@@ -119,6 +119,7 @@ public class CommentServiceImpl implements CommentService {
         Query query = new Query();
         query.addCriteria(Criteria.where("_id").is(id));
         Update update = new Update();
+//        字段自增
         update.inc("thumbup", 1);
         UpdateResult result = this.mongoTemplate.updateFirst(query, update, "review");
         return result.isModifiedCountAvailable();
@@ -126,7 +127,13 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public boolean updateVisits(String id) {
-        return false;
+        Query query = new Query();
+        query.addCriteria(Criteria.where("_id").is(id));
+        Update update = new Update();
+//        字段自增
+        update.inc("visit", 1);
+        UpdateResult result = this.mongoTemplate.updateFirst(query, update, "review");
+        return result.isModifiedCountAvailable();
     }
 
 }
