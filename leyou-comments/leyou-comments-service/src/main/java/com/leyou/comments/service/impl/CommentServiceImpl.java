@@ -56,7 +56,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Page<Review> findReviewBySpuId(CommentRequestParam commentRequestParam) {
         PageRequest pageRequest = PageRequest.of(commentRequestParam.getPage() - 1, commentRequestParam.getDefaultSize());
-        return (Page<Review>) this.commentDao.findReviewBySpuid(commentRequestParam.getSpuId() + "", pageRequest);
+        return  this.commentDao.findReviewBySpuid(commentRequestParam.getSpuId() + "", pageRequest);
     }
 
     @Override
