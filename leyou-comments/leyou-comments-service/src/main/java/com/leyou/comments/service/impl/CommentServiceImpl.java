@@ -19,6 +19,7 @@ import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -44,7 +45,13 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Review findOne(String id) {
-        return null;
+//        这个类自带判空逻辑
+        Optional<Review> optional = commentDao.findById(id);
+//        具体实现
+//        public T orElse(T other) {
+//            return value != null ? value : other;
+//        }
+        return optional.orElse(null);
     }
 
     @Override

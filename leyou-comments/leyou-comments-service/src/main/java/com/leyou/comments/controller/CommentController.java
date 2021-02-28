@@ -67,5 +67,14 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @GetMapping("/commentId/{id}")
+    public ResponseEntity<Review> findReviewById(@PathVariable("id") String id) {
+        Review review = this.commentService.findOne(id);
+        if (review == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(review);
+    }
+
 
 }
