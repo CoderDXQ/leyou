@@ -2,8 +2,8 @@ package com.leyou.order.interceptor;
 
 
 import com.leyou.common.pojo.UserInfo;
-import com.leyou.common.utils.CookieUtils;
-import com.leyou.common.utils.JwtUtils;
+import com.leyou.utils.CookieUtils;
+import com.leyou.utils.JwtUtils;
 import com.leyou.order.properties.JwtProperties;
 
 import org.apache.commons.lang3.StringUtils;

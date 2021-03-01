@@ -1,7 +1,7 @@
 package com.leyou.gateway.filter;
 
-import com.leyou.common.utils.CookieUtils;
-import com.leyou.common.utils.JwtUtils;
+import com.leyou.utils.CookieUtils;
+import com.leyou.utils.JwtUtils;
 import com.leyou.gateway.config.FilterProperties;
 import com.leyou.gateway.config.JwtProperties;
 import com.netflix.zuul.ZuulFilter;

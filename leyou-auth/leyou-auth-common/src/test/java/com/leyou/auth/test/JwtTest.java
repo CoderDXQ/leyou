@@ -1,12 +1,10 @@
 package com.leyou.auth.test;
 
 import com.leyou.common.pojo.UserInfo;
-import com.leyou.common.utils.JwtUtils;
-import com.leyou.common.utils.RsaUtils;
+import com.leyou.utils.JwtUtils;
+import com.leyou.utils.RsaUtils;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.security.PrivateKey;

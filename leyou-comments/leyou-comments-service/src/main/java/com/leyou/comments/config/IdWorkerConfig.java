@@ -1,7 +1,7 @@
 package com.leyou.comments.config;
 
 import com.leyou.comments.properties.IdWorkerProperties;
-import com.leyou.common.utils.IdWorker;
+import com.leyou.utils.IdWorker;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

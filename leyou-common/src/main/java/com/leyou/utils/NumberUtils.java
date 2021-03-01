@@ -1,4 +1,4 @@
-package com.leyou.common.utils;
+package com.leyou.utils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

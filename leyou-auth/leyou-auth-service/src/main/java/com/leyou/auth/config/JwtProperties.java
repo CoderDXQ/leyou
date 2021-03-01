@@ -1,6 +1,6 @@
 package com.leyou.auth.config;
 
-import com.leyou.common.utils.RsaUtils;
+import com.leyou.utils.RsaUtils;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

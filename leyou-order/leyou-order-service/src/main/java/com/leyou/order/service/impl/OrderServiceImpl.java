@@ -5,7 +5,7 @@ import com.github.pagehelper.PageHelper;
 
 import com.leyou.common.pojo.PageResult;
 import com.leyou.common.pojo.UserInfo;
-import com.leyou.common.utils.IdWorker;
+import com.leyou.utils.IdWorker;
 import com.leyou.item.pojo.Stock;
 import com.leyou.order.client.GoodsClient;
 import com.leyou.order.interceptor.LoginInterceptor;
@@ -13,27 +13,21 @@ import com.leyou.order.mapper.*;
 import com.leyou.order.pojo.Order;
 import com.leyou.order.pojo.OrderDetail;
 import com.leyou.order.pojo.OrderStatus;
-import com.leyou.order.pojo.SeckillOrder;
 import com.leyou.order.service.OrderService;
 import com.leyou.order.service.OrderStatusService;
 import com.leyou.order.vo.OrderStatusMessage;
 import org.apache.commons.lang3.StringUtils;
-import org.aspectj.weaver.ast.Or;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
-import javax.sound.midi.SoundbankResource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @Author: 98050

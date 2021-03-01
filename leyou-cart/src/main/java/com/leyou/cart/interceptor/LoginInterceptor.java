@@ -2,8 +2,8 @@ package com.leyou.cart.interceptor;
 
 import com.leyou.cart.config.JwtProperties;
 import com.leyou.common.pojo.UserInfo;
-import com.leyou.common.utils.CookieUtils;
-import com.leyou.common.utils.JwtUtils;
+import com.leyou.utils.CookieUtils;
+import com.leyou.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;

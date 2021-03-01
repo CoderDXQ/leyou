@@ -1,6 +1,6 @@
 package com.leyou.order.service.impl;
 
-import com.leyou.common.utils.JsonUtils;
+import com.leyou.utils.JsonUtils;
 import com.leyou.order.service.OrderStatusService;
 import com.leyou.order.vo.OrderStatusMessage;
 import org.slf4j.Logger;

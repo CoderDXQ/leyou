@@ -1,6 +1,6 @@
 package com.leyou.comments.properties;
 
-import com.leyou.common.utils.RsaUtils;
+import com.leyou.utils.RsaUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

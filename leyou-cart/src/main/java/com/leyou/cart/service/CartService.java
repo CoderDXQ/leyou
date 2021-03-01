@@ -4,7 +4,7 @@ import com.leyou.cart.client.GoodsClient;
 import com.leyou.cart.interceptor.LoginInterceptor;
 import com.leyou.cart.pojo.Cart;
 import com.leyou.common.pojo.UserInfo;
-import com.leyou.common.utils.JsonUtils;
+import com.leyou.utils.JsonUtils;
 import com.leyou.item.bo.Sku;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

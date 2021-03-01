@@ -1,4 +1,4 @@
-package com.leyou.common.utils;
+package com.leyou.utils;
 
 import com.leyou.common.pojo.UserInfo;
 import io.jsonwebtoken.Claims;

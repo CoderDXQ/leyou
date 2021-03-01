@@ -2,8 +2,8 @@ package com.leyou.comments.interceptor;
 
 import com.leyou.comments.properties.JwtProperties;
 import com.leyou.common.pojo.UserInfo;
-import com.leyou.common.utils.CookieUtils;
-import com.leyou.common.utils.JwtUtils;
+import com.leyou.utils.CookieUtils;
+import com.leyou.utils.JwtUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.ModelAndView;

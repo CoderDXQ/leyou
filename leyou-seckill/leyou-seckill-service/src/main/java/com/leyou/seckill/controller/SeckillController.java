@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +21,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping
-public class SeckillController  {
+public class SeckillController {
 
     @Autowired
     private SeckillService seckillService;
@@ -60,6 +57,23 @@ public class SeckillController  {
         }
         return ResponseEntity.ok(id);
     }
+
+
+    //    根据userId查询订单号
+    @GetMapping("orderId")
+    public ResponseEntity<Long> checkSeckillOrder(Long userId) {
+        Long result = this.seckillService.checkSeckillOrder(userId);
+        if (result == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @AccessLimit(se)
+
+
+
+
 
 
 }
