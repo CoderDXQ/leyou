@@ -15,4 +15,7 @@ public enum LyException {
      * 品牌信息无法找到
      */
     BRAND_NOT_FOUND,
+
+
+
 }

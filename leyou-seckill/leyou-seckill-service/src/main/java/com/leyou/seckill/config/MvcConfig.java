@@ -1,4 +1,3 @@
-/*
 package com.leyou.seckill.config;
 
 import com.leyou.seckill.interceptor.AccessInterceptor;
@@ -14,14 +13,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.ArrayList;
 import java.util.List;
 
-*/
 /**
  * @author Duan Xiangqing
  * @version 1.0
  * @date 2021/2/23 11:32 下午
- *//*
-
-//???可能需要打开
+ */
 @Configuration
 @EnableWebMvc
 //@EnableConfigurationProperties(JwtProperties.class)
@@ -38,6 +34,7 @@ public class MvcConfig implements WebMvcConfigurer {
     @Autowired
     public AccessInterceptor accessInterceptor;
 
+//    ？？？与文档不一样 可能需要改改
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
@@ -68,4 +65,3 @@ public class MvcConfig implements WebMvcConfigurer {
 //    }
 
 }
-*/

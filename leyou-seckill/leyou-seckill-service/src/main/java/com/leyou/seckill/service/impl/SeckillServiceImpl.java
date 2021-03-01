@@ -1,8 +1,10 @@
 package com.leyou.seckill.service.impl;
 
 import com.leyou.item.pojo.SeckillGoods;
+import com.leyou.item.pojo.Stock;
 import com.leyou.order.pojo.Order;
 import com.leyou.order.pojo.OrderDetail;
+import com.leyou.order.pojo.SeckillOrder;
 import com.leyou.seckill.client.GoodsClient;
 import com.leyou.seckill.client.OrderClient;
 import com.leyou.seckill.mapper.SeckillMapper;
@@ -10,18 +12,25 @@ import com.leyou.seckill.mapper.SeckillOrderMapper;
 import com.leyou.seckill.mapper.SkuMapper;
 import com.leyou.seckill.mapper.StockMapper;
 import com.leyou.seckill.service.SeckillService;
+import com.leyou.seckill.utils.JsonUtils;
+import com.leyou.seckill.vo.SeckillMessage;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.slf4j.Logger;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Duan Xiangqing
@@ -100,4 +109,54 @@ public class SeckillServiceImpl implements SeckillService {
     }
 
 
+    @Override
+    public boolean queryStock(Long skuId) {
+        Stock stock = this.stockMapper.selectByPrimaryKey(skuId);
+        if (stock.getSeckillStock() - 1 < 0) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void sendMessage(SeckillMessage seckillMessage) {
+        String json = JsonUtils.serialize(seckillMessage);
+        try {
+            this.amqpTemplate.convertAndSend("order.seckill", json);
+        } catch (AmqpException e) {
+            LOGGER.error("秒杀商品消息发送异常，商品id: {}", seckillMessage.getSeckillGoods().getSkuId(), e);
+        }
+
+    }
+
+
+    @Override
+    public Long checkSeckillOrder(Long userId) {
+        Example example = new Example(SeckillOrder.class);
+        example.createCriteria().andEqualTo("userId", userId);
+        List<SeckillOrder> seckillOrders = this.seckillOrderMapper.selectByExample(example);
+        if (seckillOrders == null || seckillOrders.size() == 0) {
+            return null;
+        }
+        return seckillOrders.get(0).getOrderId();
+    }
+
+    @Override
+    public String createPath(Long goodsId, Long id) {
+        String str = new BCryptPasswordEncoder().encode(goodsId.toString() + id);
+        BoundHashOperations<String, Object, Object> hashOperations = this.stringRedisTemplate.boundHashOps(KEY_PREFIX_PATH);
+        String key = id.toString() + "_" + goodsId;
+        hashOperations.put(key, str);
+        hashOperations.expire(60, TimeUnit.SECONDS);
+        return str;
+    }
+
+    @Override
+    public boolean checkSeckillPath(Long goodsId, Long id, String path) {
+//        组装键
+        String key = id.toString() + "_" + goodsId;
+        BoundHashOperations<String, Object, Object> hashOperations = this.stringRedisTemplate.boundHashOps(KEY_PREFIX_PATH);
+        String encodePath = (String) hashOperations.get(key);
+        return new BCryptPasswordEncoder().matches(path, encodePath);
+    }
 }
