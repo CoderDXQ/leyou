@@ -82,7 +82,8 @@
 
     在部署了Redis的机器上使用`redis-server start`启动服务。
     
-    或者在`/usr/local/bin`下执行二进制文件。
+    或者在`/usr/local/bin`下执行二进制文件,需要以配置文件启动才能进行远程连接`nohup redis-server /usr/local/leyou/redis/redis.conf &`。
+    
     
 11. 启动MongoDB
 

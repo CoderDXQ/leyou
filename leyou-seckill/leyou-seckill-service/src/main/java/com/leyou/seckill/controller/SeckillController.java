@@ -47,7 +47,7 @@ public class SeckillController {
      * @throws Exception
      */
 //    ???不知道这里到底有什么问题
-    @Override
+//    @Override
     public void afterPropertiesSet() throws Exception {
 //        从Redis中获取初始值
         BoundHashOperations<String, Object, Object> hashOperations = this.stringRedisTemplate.boundHashOps(KEY_PREFIX);
