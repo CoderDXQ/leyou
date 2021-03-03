@@ -1,7 +1,8 @@
 package com.leyou.order.config;
 
-import com.leyou.utils.IdWorker;
+
 import com.leyou.order.properties.IdWorkerProperties;
+import com.leyou.order.utils.IdWorker;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

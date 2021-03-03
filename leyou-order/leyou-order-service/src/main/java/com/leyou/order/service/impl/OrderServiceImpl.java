@@ -5,7 +5,6 @@ import com.github.pagehelper.PageHelper;
 
 import com.leyou.common.pojo.PageResult;
 import com.leyou.common.pojo.UserInfo;
-import com.leyou.utils.IdWorker;
 import com.leyou.item.pojo.Stock;
 import com.leyou.order.client.GoodsClient;
 import com.leyou.order.interceptor.LoginInterceptor;
@@ -15,6 +14,7 @@ import com.leyou.order.pojo.OrderDetail;
 import com.leyou.order.pojo.OrderStatus;
 import com.leyou.order.service.OrderService;
 import com.leyou.order.service.OrderStatusService;
+import com.leyou.order.utils.IdWorker;
 import com.leyou.order.vo.OrderStatusMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

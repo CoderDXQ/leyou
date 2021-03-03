@@ -2,8 +2,8 @@ package com.leyou.comments.listener;
 
 import com.leyou.comments.dao.CommentDao;
 import com.leyou.comments.pojo.Review;
-import com.leyou.utils.IdWorker;
-import com.leyou.utils.JsonUtils;
+import com.leyou.comments.utils.IdWorker;
+import com.leyou.comments.utils.JsonUtils;
 import com.leyou.order.vo.CommentsParameter;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.Exchange;

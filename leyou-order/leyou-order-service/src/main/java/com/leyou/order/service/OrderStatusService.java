@@ -1,5 +1,6 @@
 package com.leyou.order.service;
 
+import com.leyou.order.vo.CommentsParameter;
 import com.leyou.order.vo.OrderStatusMessage;
 
 /**
@@ -16,9 +17,10 @@ public interface OrderStatusService {
      */
     void sendMessage(OrderStatusMessage orderStatusMessage);
 
+    void sendComments(CommentsParameter commentsParameter);
+
     /**
      * 发送评论信息
      * @param commentsParameter
      */
-//    void sendComments(CommentsParameter commentsParameter);
 }

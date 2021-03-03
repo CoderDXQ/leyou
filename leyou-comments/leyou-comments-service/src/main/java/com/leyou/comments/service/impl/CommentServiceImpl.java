@@ -5,7 +5,7 @@ import com.leyou.comments.client.OrderClient;
 import com.leyou.comments.dao.CommentDao;
 import com.leyou.comments.pojo.Review;
 import com.leyou.comments.service.CommentService;
-import com.leyou.utils.IdWorker;
+import com.leyou.comments.utils.IdWorker;
 import com.mongodb.client.result.UpdateResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

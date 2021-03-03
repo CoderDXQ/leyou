@@ -207,6 +207,11 @@
             <version>1.0.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.leyou.seckill</groupId>
+            <artifactId>leyou-seckill-interface</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>
