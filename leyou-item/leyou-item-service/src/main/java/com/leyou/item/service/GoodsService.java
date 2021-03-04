@@ -66,7 +66,7 @@ public class GoodsService {
     private static final String KEY_PREFIX = "leyou:seckill:stock";
 
     //    ？？？日志这一块可能有问题
-    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(GoodsService.class);
+//    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(GoodsService.class);
 
 
     //    saleable是否上架  分页查询的条件和规则是多样的 对应场景是商城的大的搜索页面（可以设置搜索条件和排序方式等） 然后分页进行展示
@@ -271,7 +271,7 @@ public class GoodsService {
             this.stockMapper.updateByPrimaryKeySelective(stock);
 
         } else {
-            LOGGER.info("更新库存失败！");
+//            LOGGER.info("更新库存失败！");
             System.out.println("更新库存失败！");
         }
 

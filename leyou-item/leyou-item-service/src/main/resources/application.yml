@@ -11,6 +11,8 @@ spring:
       maximum-pool-size: 30
       minimum-idle: 10
     driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: 10.108.163.120
   rabbitmq:
     host: 10.108.163.120
     username: leyou
@@ -39,3 +41,10 @@ ribbon:
 mybatis:
   type-aliases-package: com.leyou.item.pojo
 
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMillisecond: 10000 # 熔断超时时长：10000ms

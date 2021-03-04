@@ -1,3 +1,4 @@
+/*
 import com.leyou.comments.LeyouCommentsApplication;
 import com.leyou.comments.dao.CommentDao;
 import com.leyou.comments.pojo.Review;
@@ -11,11 +12,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+*/
 /**
  * @author Duan Xiangqing
  * @version 1.0
  * @date 2021/2/28 10:44 下午
- */
+ *//*
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = LeyouCommentsApplication.class)
 public class CommentsTest {
@@ -26,9 +29,11 @@ public class CommentsTest {
     @Autowired
     private CommentDao commentDao;
 
-    /**
+    */
+/**
      * spuId为2的商品添加100条顶级评论数据
-     */
+     *//*
+
     @Test
     public void LoadData() {
         for (int i = 0; i < 100; i++) {
@@ -81,3 +86,4 @@ public class CommentsTest {
 
 
 }
+*/
