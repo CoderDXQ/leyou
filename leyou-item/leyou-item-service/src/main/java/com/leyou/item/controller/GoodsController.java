@@ -31,6 +31,8 @@ public class GoodsController {
     @Autowired
     private GoodsService goodsService;
 
+
+
     /**
      * 分页查询
      *
@@ -115,7 +117,8 @@ public class GoodsController {
     }
 
     //    添加秒杀商品  ???可能不需要最前面的"/"
-    @PostMapping("/seckill/add")
+
+    @PostMapping("seckill/add")
     public ResponseEntity<Boolean> addSeckillGoods(@RequestBody List<SeckillParameter> seckillParameters) throws ParseException {
         if (seckillParameters != null && seckillParameters.size() > 0) {
             for (SeckillParameter seckillParameter : seckillParameters) {
@@ -126,6 +129,7 @@ public class GoodsController {
         }
         return ResponseEntity.ok().build();
     }
+
 
     //    查询秒杀商品  ???可能不需要最前面的"/"
     @GetMapping("/seckill/list")

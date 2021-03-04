@@ -7,20 +7,23 @@
 
 2. 完成作业中的功能 https://github.com/ohmyray/leyou
 
-3. 搭建一个小型商城项目，重点关注其中的秒杀部分。如果没有秒杀部分，就参考其他工程加上这个功能部分。
+3. Spring Cloud Config 集中配置中心的设计与实现
 
-4. 未登录的购物车功能是由前端实现的，这里没有做，只实现了登录状态下的购物车功能。
+4. 使用Jenkins部署和持续集成
 
-5. Spring Cloud Config 集中配置中心的设计与实现
+5. 评论微服务
 
-6. 使用Jenkins部署和持续集成
+6. 延迟消息队列 实现自动好评
 
-7. 订单中心重构
+## 待测试的功能
 
-8. 评论微服务
+1. https://blog.csdn.net/lyj2018gyq/article/details/83927764
 
-9. 延迟消息队列 实现自动好评
+2. https://blog.csdn.net/lyj2018gyq/article/details/84075983
 
+3. https://blog.csdn.net/lyj2018gyq/article/details/84261377
+
+4. 
 
 
 

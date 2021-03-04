@@ -1,5 +1,6 @@
 package com.leyou.seckill.service;
 
+import com.leyou.item.bo.SeckillParameter;
 import com.leyou.item.pojo.SeckillGoods;
 import com.leyou.seckill.vo.SeckillMessage;
 
@@ -61,4 +62,6 @@ public interface SeckillService {
      * @return
      */
     boolean checkSeckillPath(Long goodsId, Long id, String path);
+
+//    void addSeckillGoods(SeckillParameter seckillParameter);
 }

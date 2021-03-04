@@ -1,12 +1,11 @@
 package com.leyou.seckill.properties;
 
-import com.leyou.utils.RsaUtils;
+import com.leyou.seckill.utils.RsaUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Configuration;
-
 import javax.annotation.PostConstruct;
 import java.security.PublicKey;
 

@@ -59,4 +59,5 @@ public interface GoodsApi {
     public ResponseEntity<List<SeckillGoods>> querySeckillGoods();
 
 
+
 }

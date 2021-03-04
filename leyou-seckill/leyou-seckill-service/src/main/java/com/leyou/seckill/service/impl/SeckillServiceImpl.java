@@ -1,5 +1,7 @@
 package com.leyou.seckill.service.impl;
 
+import com.leyou.item.bo.SeckillParameter;
+import com.leyou.item.bo.Sku;
 import com.leyou.item.pojo.SeckillGoods;
 import com.leyou.item.pojo.Stock;
 import com.leyou.order.pojo.Order;
@@ -14,7 +16,7 @@ import com.leyou.seckill.mapper.StockMapper;
 import com.leyou.seckill.service.SeckillService;
 import com.leyou.seckill.utils.JsonUtils;
 import com.leyou.seckill.vo.SeckillMessage;
-import org.mybatis.spring.support.SqlSessionDaoSupport;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -29,7 +31,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import tk.mybatis.mapper.entity.Example;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -160,4 +165,44 @@ public class SeckillServiceImpl implements SeckillService {
         String encodePath = (String) hashOperations.get(key);
         return new BCryptPasswordEncoder().matches(path, encodePath);
     }
+
+    /**
+     * 添加秒杀商品
+     *
+     * @param seckillParameter
+     */
+//    @Override
+//    @Transactional(rollbackFor = Exception.class)
+//    public void addSeckillGoods(SeckillParameter seckillParameter) {
+//
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(new Date());
+//        seckillParameter.setStartTime(sdf.format(calendar.getTime()));
+//        calendar.add(Calendar.HOUR, 2);
+//        seckillParameter.setEndTime(sdf.format(calendar.getTime()));
+//
+//        //1.根据spu_id查询商品
+//        Long id = seckillParameter.getId();
+//        Sku sku = goodsClient.querySkuBySkuId(id);
+//        //2.插入到秒杀商品表中
+//        SeckillGoods seckillGoods = new SeckillGoods();
+//        seckillGoods.setEnable(true);
+//        seckillGoods.setStartTime(seckillParameter.getStartTime());
+//        seckillGoods.setEndTime(seckillParameter.getEndTime());
+//        seckillGoods.setImage(sku.getImages());
+//        seckillGoods.setSkuId(sku.getId());
+//        seckillGoods.setStock(seckillParameter.getCount());
+//        seckillGoods.setTitle(sku.getTitle());
+//        seckillGoods.setSeckillPrice(sku.getPrice() * seckillParameter.getDiscount());
+//        this.seckillMapper.insert(seckillGoods);
+//        //3.更新对应的库存信息，tb_stock
+//        Stock stock = stockMapper.selectByPrimaryKey(sku.getId());
+//        stock.setSeckillStock(stock.getSeckillStock() + seckillParameter.getCount());
+//        stock.setSeckillTotal(stock.getSeckillTotal() + seckillParameter.getCount());
+//        stock.setStock(stock.getStock() - seckillParameter.getCount());
+//        this.stockMapper.updateByPrimaryKeySelective(stock);
+//
+//    }
 }

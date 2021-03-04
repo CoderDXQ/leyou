@@ -1,9 +1,9 @@
 package com.leyou.seckill.interceptor;
 
 import com.leyou.common.pojo.UserInfo;
-import com.leyou.utils.CookieUtils;
-import com.leyou.utils.JwtUtils;
 import com.leyou.seckill.properties.JwtProperties;
+import com.leyou.seckill.utils.CookieUtils;
+import com.leyou.seckill.utils.JwtUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.ModelAndView;

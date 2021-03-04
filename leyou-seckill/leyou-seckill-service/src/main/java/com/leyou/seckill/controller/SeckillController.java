@@ -1,6 +1,7 @@
 package com.leyou.seckill.controller;
 
 import com.leyou.common.pojo.UserInfo;
+import com.leyou.item.bo.SeckillParameter;
 import com.leyou.item.pojo.SeckillGoods;
 import com.leyou.seckill.access.AccessLimit;
 import com.leyou.seckill.client.GoodsClient;
@@ -69,6 +70,15 @@ public class SeckillController {
         return ResponseEntity.ok(id);
     }
 
+//    @PostMapping("addSeckill")
+//    public ResponseEntity<Boolean> addSeckillGoods(@RequestBody SeckillParameter seckillParameter){
+//        if (seckillParameter != null){
+//            this.seckillService.addSeckillGoods(seckillParameter);
+//        }else {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//        return ResponseEntity.ok().build();
+//    }
 
     //    根据userId查询订单号
     @GetMapping("orderId")

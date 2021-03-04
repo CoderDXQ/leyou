@@ -92,5 +92,18 @@ public class Review implements Serializable {
         this.type = type;
     }
 
+    public Review(String spuid, String content, String userid, String nickname, List<String> images, Boolean iscomment, String parentid, Boolean isparent, Integer type) {
+        this.spuid = spuid;
+        this.content = content;
+        this.userid = userid;
+        this.nickname = nickname;
+        this.images = images;
+        this.iscomment = iscomment;
+        this.parentid = parentid;
+        this.isparent = isparent;
+        this.type = type;
+    }
+
+
 
 }

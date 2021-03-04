@@ -13,13 +13,25 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/hm49?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false
     username: root
     password: dxq5522565
+#    filters: stat
+#    initialSize: 2
+#    maxActive: 300
+#    maxWait: 60000
+#    timeBetweenEvictionRunsMillis: 60000
+#    minEvictableIdleTimeMillis: 300000
+#    validation-query: SELECT 1
+#    test-while-idle: true
+#    testOnBorrow: false
+#    testOnReturn: false
+#    poolPreparedStatements: false
+    maxPoolPreparedStatementPerConnectionSiz: 200
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: 20
       minimum-idle: 10
   rabbitmq:
     virtual-host: /leyou
-    username: /leyou
+    username: leyou
     password: leyou
     host: 10.108.163.120
     template:

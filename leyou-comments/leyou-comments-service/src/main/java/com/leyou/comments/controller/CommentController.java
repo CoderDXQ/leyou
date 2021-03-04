@@ -49,6 +49,7 @@ public class CommentController {
         return ResponseEntity.ok(pageResult);
     }
 
+    //    没有最前面的"/"
     @PostMapping("comment/{orderId}")
     public ResponseEntity<Void> addReview(@PathVariable("orderId") Long orderId, @RequestBody Review review) {
         boolean result = this.commentService.add(orderId, review);
@@ -58,7 +59,8 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @DeleteMapping("/commentId/{id}")
+    //     没有最前面的"/"
+    @DeleteMapping("commentId/{id}")
     public ResponseEntity<Void> deletereview(@PathVariable("id") String id) {
         this.commentService.deleteById(id);
         return ResponseEntity.status(HttpStatus.OK).build();
@@ -79,7 +81,7 @@ public class CommentController {
         return ResponseEntity.ok(review);
     }
 
-    @PutMapping("thumb/{id}")
+    @PutMapping("/thumb/{id}")
     public ResponseEntity<Boolean> updateThumbup(@PathVariable String id) {
 //        从拦截器获得用户信息
         UserInfo userInfo = LoginInterceptor.getLoginUser();

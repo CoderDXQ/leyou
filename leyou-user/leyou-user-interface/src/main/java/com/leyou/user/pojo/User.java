@@ -26,8 +26,8 @@ public class User {
     @Length(min = 4, max = 30, message = "用户名只能在4~30位之间")
     private String username;// 用户名
 
-    @JsonIgnore//对象序列化为json字符串时忽略该属性
-    @Length(min = 4, max = 30, message = "密码只能在4~30位之间")
+//    @JsonIgnore//对象序列化为json字符串时忽略该属性
+//    @Length(min = 4, max = 30, message = "密码只能在4~30位之间")
     private String password;// 密码
 
     @Pattern(regexp = "^1[35678]\\d{9}$", message = "手机号格式不正确")
