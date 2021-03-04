@@ -9,8 +9,8 @@ server:
       elasticsearch:
         cluster-name: elasticsearch
         cluster-nodes: 10.108.163.120:9300
-    datasource:
-      url: jdbc:mysql://127.0.0.1:3306/hm49?characterEncoding=UTF-8&useSSL=false
+    datasource:                            #?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false
+      url: jdbc:mysql://127.0.0.1:3306/hm49?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false
       username: root
       password: dxq5522565
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -68,3 +68,6 @@ server:
       pubKeyPath: /Users/duanxiangqing/Desktop/leyoucode/rsa/rsa.pub # 公钥地址
 
       # ??? 有些配置可能还没配好
+#spring:
+#  autoconfigure:
+#    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration

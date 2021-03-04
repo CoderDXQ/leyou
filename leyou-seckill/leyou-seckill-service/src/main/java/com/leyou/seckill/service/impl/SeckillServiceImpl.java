@@ -14,6 +14,7 @@ import com.leyou.seckill.mapper.StockMapper;
 import com.leyou.seckill.service.SeckillService;
 import com.leyou.seckill.utils.JsonUtils;
 import com.leyou.seckill.vo.SeckillMessage;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.AmqpTemplate;
