@@ -71,3 +71,5 @@ server:
 #spring:
 #  autoconfigure:
 #    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+#mybatis:
+#  mapper-locations: com.leyou.seckill.mapper
