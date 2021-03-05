@@ -34,9 +34,10 @@ public class UserTest {
             user.setCreated(new Date());
             user.setPhone("1883482" + String.format("%04d", i));
             user.setUsername("username" + i);
-            user.setPassword("a");
-            String encodePassword = CodecUtils.passwordBcryptEncode(user.getUsername().trim(), user.getPassword().trim());
-            user.setPassword(encodePassword);
+            user.setPassword("afdgdfg");
+            user.setSalt("1111111111");
+//            String encodePassword = CodecUtils.passwordBcryptEncode(user.getUsername().trim(), user.getPassword().trim());
+//            user.setPassword(encodePassword);
             this.userMapper.insertSelective(user);
         }
     }
@@ -51,8 +52,9 @@ public class UserTest {
         user.setPhone("88888888");
         user.setUsername("admin");
         user.setPassword("adff");
-        String encodePassword = CodecUtils.passwordBcryptEncode(user.getUsername().trim(), user.getPassword().trim());
-        user.setPassword(encodePassword);
+        user.setSalt("1111111111");
+//        String encodePassword = CodecUtils.passwordBcryptEncode(user.getUsername().trim(), user.getPassword().trim());
+//        user.setPassword(encodePassword);
         this.userMapper.insertSelective(user);
     }
 

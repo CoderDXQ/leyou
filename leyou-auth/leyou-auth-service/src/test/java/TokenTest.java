@@ -33,9 +33,10 @@ public class TokenTest {
 //            ？？？这个地址需要视情况而变化
             File csv = new File("/Users/duanxiangqing/Desktop/leyoucode/leyou/others/Token.csv");
             bw = new BufferedWriter(new FileWriter(csv, true));
-            for (int i = 0; i < 5000; i++) {
+            for (int i = 0; i < 500; i++) {
                 //            两个参数分别是用户名和密码
-                String token = this.authService.accredit("username" + i, "abcdefg" + i);
+                String token = this.authService.accredit("username" + i, "afdgdfg");
+                System.out.println("username" + i + "经过鉴权");
                 bw.write("username" + i + "," + token);
                 bw.newLine();
             }

@@ -11,9 +11,7 @@
 
 4. 使用Jenkins部署和持续集成
 
-5. 评论微服务
-
-6. 延迟消息队列 实现自动好评
+6. 秒杀升级  使用更多策略解决更多问题
 
 ## 待测试的功能
 
@@ -22,6 +20,8 @@
 2. https://blog.csdn.net/lyj2018gyq/article/details/84261377
 
 3. https://blog.csdn.net/lyj2018gyq/article/details/84109151
+
+4. https://blog.csdn.net/lyj2018gyq/article/details/84679844
 
 
 
