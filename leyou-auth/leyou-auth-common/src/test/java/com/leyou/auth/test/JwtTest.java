@@ -1,8 +1,6 @@
 package com.leyou.auth.test;
 
 import com.leyou.common.pojo.UserInfo;
-import com.leyou.utils.JwtUtils;
-import com.leyou.utils.RsaUtils;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -6,8 +6,7 @@ import com.leyou.seckill.access.AccessLimit;
 import com.leyou.seckill.client.GoodsClient;
 import com.leyou.seckill.interceptor.LoginInterceptor;
 import com.leyou.seckill.service.SeckillService;
-import com.leyou.seckill.vo.SeckillMessage;
-import com.netflix.ribbon.proxy.annotation.Http;
+import com.leyou.seckill.vo.SeckillMessage;;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +55,9 @@ public class SeckillController implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
 
 //        查询可以秒杀的商品
-        List<SeckillGoods> seckillGoods = (List<SeckillGoods>) this.goodsClient.querySeckillGoods();
+        List<SeckillGoods> seckillGoods = this.goodsClient.querySeckillGoods();
         if (seckillGoods == null || seckillGoods.size() == 0) {
+            System.out.println("这里出错了");
             return;
         }
 

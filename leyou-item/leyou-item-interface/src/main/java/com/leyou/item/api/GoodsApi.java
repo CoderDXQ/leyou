@@ -18,7 +18,7 @@ import java.util.List;
  * @version 1.0
  * @date 2021/2/10 12:51 上午
  */
-@RequestMapping("/goods")
+@RequestMapping("goods")
 public interface GoodsApi {
 
     @GetMapping("/spu/page")
@@ -56,8 +56,8 @@ public interface GoodsApi {
 
     //???返回值可能有错误
     @GetMapping("/seckill/list")
-    public ResponseEntity<List<SeckillGoods>> querySeckillGoods();
-
+    public List<SeckillGoods> querySeckillGoods();
+//     ResponseEntity<List<SeckillGoods>> querySeckillGoods();
 
 
 }

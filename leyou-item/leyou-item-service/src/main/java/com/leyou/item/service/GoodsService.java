@@ -3,13 +3,12 @@ package com.leyou.item.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.leyou.common.pojo.PageResult;
-import com.leyou.item.bo.SeckillParameter;
+import com.leyou.item.bo.SeckillParameter;;
 import com.leyou.item.bo.Sku;
 import com.leyou.item.bo.SpuBo;
 import com.leyou.item.mapper.*;
 import com.leyou.item.pojo.*;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.LoggerFactory;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.BeanUtils;
@@ -19,12 +18,10 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Logger;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -293,6 +290,7 @@ public class GoodsService {
 
     }
 
+    //    @Override
     //    查询秒杀商品
     public List<SeckillGoods> querySeckillGoods() {
 //        设置查询条件
@@ -308,8 +306,12 @@ public class GoodsService {
         });
         return list;
     }
-
-    
+//
+//    public List<SeckillGoods> querySeckillGoods() {
+//        Example example = new Example(SeckillGoods.class);
+//        example.createCriteria().andEqualTo("enable", true);
+//        return this.seckillMapper.selectByExample(example);
+//    }
 
 
 }

@@ -8,5 +8,7 @@ import tk.mybatis.mapper.common.Mapper;
  * @version 1.0
  * @date 2021/2/25 12:43 上午
  */
+
+@org.apache.ibatis.annotations.Mapper
 public interface SeckillMapper extends Mapper<SeckillGoods> {
 }
