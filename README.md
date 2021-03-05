@@ -1,7 +1,9 @@
-# leyou
+
+# 商城
+
+---
 
 ## Question和以后规划的功能:
-
 
 1. 大部分功能只有查询，尝试把增删改查补全  可能要写mapper.xml或者写mapper接口也行
 
@@ -13,7 +15,18 @@
 
 6. 秒杀升级  使用更多策略解决更多问题
 
+-----
+
 ## 待测试的功能
+
+#### 测试时需要注意的问题：
+
+权限问题：调用接口登陆 localhost:8087/accredit
+
+        然后调用接口鉴权 http://api.leyou.com/api/auth/accredit?username=liuyang&password=123456
+        
+        这个最好也调一下（可能是获得Cookie中的TOKEN） http://api.leyou.com/api/auth/verify
+        
 
 1. https://blog.csdn.net/lyj2018gyq/article/details/84075983
 
@@ -22,6 +35,9 @@
 3. https://blog.csdn.net/lyj2018gyq/article/details/84109151
 
 4. https://blog.csdn.net/lyj2018gyq/article/details/84679844
+   
+   这个测试需要调用接口发单然后逐步调用接口更新订单状态，然后按网页中的图文进行测试。
+
 
 
 
