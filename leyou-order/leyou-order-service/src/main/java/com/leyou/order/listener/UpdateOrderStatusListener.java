@@ -25,6 +25,8 @@ import java.util.List;
  * @Time: 2018-12-10 23:12
  * @Feature: 自动修改订单状态：自动确认收货，自动评价
  */
+
+//监听消息队列中的修改订单的消息  用于订单修改
 @Component
 public class UpdateOrderStatusListener {
 

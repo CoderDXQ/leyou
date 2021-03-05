@@ -127,6 +127,7 @@ public class SeckillServiceImpl implements SeckillService {
     @Override
     public void sendMessage(SeckillMessage seckillMessage) {
         String json = JsonUtils.serialize(seckillMessage);
+        System.out.println(json);
         try {
             this.amqpTemplate.convertAndSend("order.seckill", json);
         } catch (AmqpException e) {
@@ -171,6 +172,8 @@ public class SeckillServiceImpl implements SeckillService {
      *
      * @param seckillParameter
      */
+
+//    ？？？添加秒杀商品接口需要改改 duan 2021.3.5
 //    @Override
 //    @Transactional(rollbackFor = Exception.class)
 //    public void addSeckillGoods(SeckillParameter seckillParameter) {

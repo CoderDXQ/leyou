@@ -31,6 +31,8 @@ import java.util.List;
  * @Time: 2018-11-15 20:30
  * @Feature: 秒杀消息队列监听器
  */
+
+//用于监听秒杀队列的消息并创建秒杀订单(包含多种数据库操作)
 @Component
 public class SeckillListener {
 
@@ -74,9 +76,10 @@ public class SeckillListener {
             ),
             key = {"order.seckill"}
     ))
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class) //数据库事务注解
     public void listenSeckill(String seck){
 
+//        消息解析
         SeckillMessage seckillMessage = JsonUtils.parse(seck, SeckillMessage.class);
         UserInfo userInfo = seckillMessage.getUserInfo();
         SeckillGoods seckillGoods = seckillMessage.getSeckillGoods();
@@ -101,6 +104,7 @@ public class SeckillListener {
         Example example = new Example(SeckillOrder.class);
         example.createCriteria().andEqualTo("userId",userInfo.getId()).andEqualTo("skuId",seckillGoods.getSkuId());
         List<SeckillOrder> list = this.seckillOrderMapper.selectByExample(example);
+//        买到了 直接返回
         if (list.size() > 0){
             return;
         }
@@ -138,7 +142,7 @@ public class SeckillListener {
         order.setCreateTime(new Date());
         order.setOrderId(orderId);
         order.setUserId(userInfo.getId());
-        //3.3 保存数据
+        //3.3 保存数据 写入数据库表tb_order
         this.orderMapper.insertSelective(order);
 
         //3.4 保存订单状态
@@ -147,7 +151,7 @@ public class SeckillListener {
         orderStatus.setCreateTime(order.getCreateTime());
         //初始状态未未付款：1
         orderStatus.setStatus(1);
-        //3.5 保存数据
+        //3.5 保存数据 写入数据库表tb_order_status
         this.orderStatusMapper.insertSelective(orderStatus);
 
         //3.6 在订单详情中添加orderId
@@ -156,7 +160,7 @@ public class SeckillListener {
             od.setOrderId(orderId);
         });
 
-        //3.7 保存订单详情，使用批量插入功能
+        //3.7 保存订单详情，使用批量插入功能 写入数据库表tb_order_detail
         this.orderDetailMapper.insertList(order.getOrderDetails());
 
         //3.8 修改库存
@@ -164,6 +168,7 @@ public class SeckillListener {
             Stock stock1 = this.stockMapper.selectByPrimaryKey(ord.getSkuId());
             stock1.setStock(stock1.getStock() - ord.getNum());
             stock1.setSeckillStock(stock1.getSeckillStock() - ord.getNum());
+//            更新数据库表tb_stock
             this.stockMapper.updateByPrimaryKeySelective(stock1);
 
             //新建秒杀订单
@@ -171,6 +176,7 @@ public class SeckillListener {
             seckillOrder.setOrderId(orderId);
             seckillOrder.setSkuId(ord.getSkuId());
             seckillOrder.setUserId(userInfo.getId());
+//            插入数据库表tb_seckill_order
             this.seckillOrderMapper.insert(seckillOrder);
 
         });

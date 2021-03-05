@@ -28,6 +28,7 @@ public class CommentsTest {
 
     /**
      * spuId为2的商品添加100条顶级评论数据
+     * 评论数据都是存在mongoDB里
      */
     @Test
     public void LoadData() {
