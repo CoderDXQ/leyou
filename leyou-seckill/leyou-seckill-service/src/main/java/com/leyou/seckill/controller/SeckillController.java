@@ -78,6 +78,7 @@ public class SeckillController implements InitializingBean {
 
     }
 
+    //    创建秒杀订单
     //单个商品的订单
     //    ？？？这里还需要优化
     @PostMapping("seck")
@@ -92,6 +93,7 @@ public class SeckillController implements InitializingBean {
         return ResponseEntity.ok(id);
     }
 
+    //    创建秒杀订单
     @PostMapping("/{path}/seck")
     public ResponseEntity<String> seckillOrder(@PathVariable("path") String path, SeckillGoods seckillGoods) {
         String result = "排队中";
@@ -110,8 +112,9 @@ public class SeckillController implements InitializingBean {
             return ResponseEntity.ok(result);
         }
 
-//        读取库存 减一后更新缓存
+//        读取库存 减一后更新缓存 默认每件商品买的数量都是1
         BoundHashOperations<String, Object, Object> hashOperations = this.stringRedisTemplate.boundHashOps(KEY_PREFIX);
+//        先更新Redis缓存  这个方法末尾再发送消息到消息队列，监听器监听到消息后更新数据库
         Long stock = hashOperations.increment(seckillGoods.getSkuId().toString(), -1);
 
 //        库存不足直接返回

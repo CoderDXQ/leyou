@@ -32,7 +32,7 @@ import java.util.List;
  * @Feature: 秒杀消息队列监听器
  */
 
-//用于监听秒杀队列的消息并创建秒杀订单(包含多种数据库操作)
+//用于监听秒杀队列的消息并创建秒杀订单(包含多种数据库操作)，消息队列中的消息是seckill模块的seckillOrder()方法发送的
 @Component
 public class SeckillListener {
 
@@ -65,10 +65,11 @@ public class SeckillListener {
 
     /**
      * 接收秒杀信息
+     *
      * @param seck
      */
     @RabbitListener(bindings = @QueueBinding(
-            value = @Queue(value = "leyou.order.seckill.queue",durable = "true"), //队列持久化
+            value = @Queue(value = "leyou.order.seckill.queue", durable = "true"), //队列持久化
             exchange = @Exchange(
                     value = "leyou.order.exchange",
                     ignoreDeclarationExceptions = "true",
@@ -77,7 +78,7 @@ public class SeckillListener {
             key = {"order.seckill"}
     ))
     @Transactional(rollbackFor = Exception.class) //数据库事务注解
-    public void listenSeckill(String seck){
+    public void listenSeckill(String seck) {
 
 //        消息解析
         SeckillMessage seckillMessage = JsonUtils.parse(seck, SeckillMessage.class);
@@ -87,13 +88,13 @@ public class SeckillListener {
 
         //1.首先判断库存是否充足
         Stock stock = stockMapper.selectByPrimaryKey(seckillGoods.getSkuId());
-        if (stock.getSeckillStock() <= 0 || stock.getStock() <= 0){
+        if (stock.getSeckillStock() <= 0 || stock.getStock() <= 0) {
             //如果库存不足的话修改秒杀商品的enable字段
             Example example = new Example(SeckillGoods.class);
             example.createCriteria().andEqualTo("skuId", seckillGoods.getSkuId());
             List<SeckillGoods> list = this.seckillMapper.selectByExample(example);
-            for (SeckillGoods temp : list){
-                if (temp.getEnable()){
+            for (SeckillGoods temp : list) {
+                if (temp.getEnable()) {
                     temp.setEnable(false);
                     this.seckillMapper.updateByPrimaryKeySelective(temp);
                 }
@@ -102,10 +103,10 @@ public class SeckillListener {
         }
         //2.判断此用户是否已经秒杀到了
         Example example = new Example(SeckillOrder.class);
-        example.createCriteria().andEqualTo("userId",userInfo.getId()).andEqualTo("skuId",seckillGoods.getSkuId());
+        example.createCriteria().andEqualTo("userId", userInfo.getId()).andEqualTo("skuId", seckillGoods.getSkuId());
         List<SeckillOrder> list = this.seckillOrderMapper.selectByExample(example);
 //        买到了 直接返回
-        if (list.size() > 0){
+        if (list.size() > 0) {
             return;
         }
         //3.下订单
@@ -114,7 +115,7 @@ public class SeckillListener {
         order.setPaymentType(1);
         order.setTotalPay(seckillGoods.getSeckillPrice());
         order.setActualPay(seckillGoods.getSeckillPrice());
-        order.setPostFee(0+"");
+        order.setPostFee(0 + "");
         order.setReceiver("李四");
         order.setReceiverMobile("15812312312");
         order.setReceiverCity("西安");
