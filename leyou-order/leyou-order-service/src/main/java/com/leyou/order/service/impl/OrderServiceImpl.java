@@ -201,12 +201,12 @@ public class OrderServiceImpl implements OrderService {
             case 3:
                 //3.发货时间
                 orderStatus.setConsignTime(new Date());
-                //发送消息到延迟队列，防止用户忘记确认收货
+                //发送消息到延迟队列，防止用户忘记确认收货 发货之后需要发送自动收货和自动评价的消息到延时队列
                 orderStatusService.sendMessage(orderStatusMessage);
                 orderStatusService.sendMessage(orderStatusMessage2);
                 break;
             case 4:
-                //4.确认收货，订单结束
+                //4.确认收货，订单结束 用户收货后需要发送自动评价的消息到延时队列
                 orderStatus.setEndTime(new Date());
                 orderStatusService.sendMessage(orderStatusMessage2);
                 break;
@@ -222,6 +222,7 @@ public class OrderServiceImpl implements OrderService {
             default:
                 return null;
         }
+//        更新订单状态 更新数据库表tb_order_status
         int count = this.orderStatusMapper.updateByPrimaryKeySelective(orderStatus);
         return count == 1;
     }

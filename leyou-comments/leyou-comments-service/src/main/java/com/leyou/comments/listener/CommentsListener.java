@@ -60,8 +60,8 @@ public class CommentsListener {
         review.setThumbup(0);
         review.setVisits(0);
 
+//        更新上级评论的数据  这里是对上级评论的操作
         if (review.getParentid() != null && !"".equals(review.getParentid())) {
-            //
             Query query = new Query();
             query.addCriteria(Criteria.where("_id").is(review.getParentid()));
 
@@ -69,8 +69,10 @@ public class CommentsListener {
             update.inc("comment", 1);
             update.set("isparent", true);
             update.inc("visits", 1);
+//            更新MongoDB 根据_id找到上级评论并更新数据
             this.mongoTemplate.updateFirst(query, update, "review");
         }
+//        存储这次的评论 用的也是MongoDB
         commentDao.save(review);
     }
 

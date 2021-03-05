@@ -82,6 +82,7 @@ public class SeckillListener {
 
 //        消息解析
         SeckillMessage seckillMessage = JsonUtils.parse(seck, SeckillMessage.class);
+//        从请求中获取用户信息而不是像service中使用拦截器 原因是消息被监听到时拦截器中已经没有用户的信息了
         UserInfo userInfo = seckillMessage.getUserInfo();
         SeckillGoods seckillGoods = seckillMessage.getSeckillGoods();
 

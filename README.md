@@ -32,31 +32,33 @@
 
 1. 启动nginx 
 
-   在`/usr/local/etc/nginx`下执行`nginx`
+   在`/usr/local/etc/nginx`下执行`nginx`。
    
 2. 启动ES
 
-   在部署ES的机器上的`/home/leyou/elasticsearch/bin`路径下执行`./elasticsearch`
+   在部署ES的机器上的`/home/leyou/elasticsearch/bin`路径下执行`./elasticsearch`。
+   
+   管理界面：http://localhost:5601/
 
 3. 启动Kibana
 
-   在`Kibana的解压文件夹`下启动即可
+   在`Kibana的解压文件夹`下启动二进制文件即可，访问 打开管理界面。
    
 4. 启动数据库
 
-   依次执行`nohup mysqld &`和`mysql -u root -p`
+   依次执行`nohup mysqld &`和`mysql -u root -p`。
 
 5. 启动服务
 
-   在IDEA中按下`command`+`8`，然后一次启动所有的微服务即可，注意需要先启动Eureka服务，然后启动其他服务
+   在IDEA中按下`command`+`8`，然后一次启动所有的微服务即可，注意需要先启动Eureka服务，然后启动其他服务。
    
 6. 启动leyou-portal
 
-   在IDEA的Terminal中执行`live-server --port=9002 `
+   在IDEA的Terminal中执行`live-server --port=9002 `。
 
 7. 启动leyou-manage-web
 
-   在IDEA的Terminal中执行`npm run dev`
+   在IDEA的Terminal中执行`npm run dev`。
    
 8. 配置好hosts
 
@@ -80,6 +82,8 @@
    `rabbitmq-plugins enable rabbitmq_management`
    
    `service rabbitmq-server restart`
+   
+   管理界面：http://10.108.163.120:15672/
    
 10. 启动Redis
 

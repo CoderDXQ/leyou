@@ -25,8 +25,10 @@ import java.util.List;
  * @Time: 2018-12-10 23:12
  * @Feature: 自动修改订单状态：自动确认收货，自动评价
  */
-
-//监听消息队列中的修改订单的消息  用于订单修改
+//消费者
+//监听消息队列中的修改订单的消息 消息从延时队列经过路由到达这个正常队列leyou.order.delay.ttl.queue
+//延时队列中的消息在未到期之前是不能被消费的
+//这个类监听的不是延时队列leyou.order.delay.queue而是正常队列leyou.order.delay.ttl.queue,延时队列中的消息到期后由交换机leyou.amq.direct路由到正常队列leyou.order.delay.ttl.queue
 @Component
 public class UpdateOrderStatusListener {
 
@@ -41,7 +43,7 @@ public class UpdateOrderStatusListener {
     private OrderStatusMapper orderStatusMapper;
 
     @RabbitListener(bindings = @QueueBinding(
-            value = @Queue(value = "leyou.order.delay.ttl.queue",durable = "true"), //队列持久化
+            value = @Queue(value = "leyou.order.delay.ttl.queue", durable = "true"), //队列持久化
             exchange = @Exchange(
                     value = "leyou.amq.direct",
                     ignoreDeclarationExceptions = "true",
@@ -49,33 +51,36 @@ public class UpdateOrderStatusListener {
             ),
             key = {"leyou_ttl_orderStatus"}
     ))
-    public void listenOrderDelayMessage(byte[] str){
+    public void listenOrderDelayMessage(byte[] str) {
         OrderStatusMessage orderStatusMessage = JsonUtils.parse(new String(str), OrderStatusMessage.class);
-        if (orderStatusMessage == null){
+        if (orderStatusMessage == null) {
             return;
         }
         int type = orderStatusMessage.getType();
 
-        if (type == 1){
+        if (type == 1) {
             //自动确认收货，时间为7天
 
             //1.查询当前订单状态
             int status = orderService.queryOrderStatusById(orderStatusMessage.getOrderId()).getStatus();
             int nowStatus = 4;
-            if (status + 1 == nowStatus){
+
+//            确认订单状态为未收货
+            if (status + 1 == nowStatus) {
                 //2.修改订单状态
                 updateOrderStatusDelay(orderStatusMessage.getOrderId(), nowStatus);
 
             }
-        }else {
+        } else {
             //自动好评，时间为5天
             //1.查询当前订单状态
             int status = orderService.queryOrderStatusById(orderStatusMessage.getOrderId()).getStatus();
             int nowStatus = 6;
-            if (status + 2 != nowStatus){
+//            确认订单状态为未评论
+            if (status + 2 != nowStatus) {
                 return;
             }
-            //2.修改订单状态
+            //2.修改订单状态 更新数据库
             updateOrderStatusDelay(orderStatusMessage.getOrderId(), nowStatus);
             //3.发送评论消息
             CommentsParameter commentsParameter = constructMessage(orderStatusMessage);
@@ -84,6 +89,7 @@ public class UpdateOrderStatusListener {
         }
     }
 
+    //    构造评论消息
     private CommentsParameter constructMessage(OrderStatusMessage orderStatusMessage) {
         Long spuId = orderStatusMessage.getSpuId();
         String content = "默认好评";
@@ -94,7 +100,7 @@ public class UpdateOrderStatusListener {
         String parentId = 0 + "";
         boolean isparent = true;
         int commentType = 1;
-        Review review = new Review(orderStatusMessage.getOrderId()+"",spuId+"", content, userId+"", nickname, images, iscomment, parentId,isparent,commentType);
+        Review review = new Review(orderStatusMessage.getOrderId() + "", spuId + "", content, userId + "", nickname, images, iscomment, parentId, isparent, commentType);
         CommentsParameter commentsParameter = new CommentsParameter();
         commentsParameter.setOrderId(orderStatusMessage.getOrderId());
         commentsParameter.setReview(review);
@@ -102,18 +108,20 @@ public class UpdateOrderStatusListener {
     }
 
 
+    //    更新数据库中的订单状态
     private void updateOrderStatusDelay(Long orderId, int nowStatus) {
 
         OrderStatus orderStatus = new OrderStatus();
         orderStatus.setOrderId(orderId);
         orderStatus.setStatus(nowStatus);
-        if (nowStatus == 4){
+        if (nowStatus == 4) {
             orderStatus.setEndTime(new Date());
         }
-        if (nowStatus == 6){
+        if (nowStatus == 6) {
             orderStatus.setCommentTime(new Date());
         }
 
+//        更新数据库
         this.orderStatusMapper.updateByPrimaryKeySelective(orderStatus);
     }
 
