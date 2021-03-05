@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 
 import com.leyou.common.pojo.PageResult;
 import com.leyou.common.pojo.UserInfo;
+import com.leyou.item.pojo.SeckillGoods;
 import com.leyou.item.pojo.Stock;
 import com.leyou.order.client.GoodsClient;
 import com.leyou.order.interceptor.LoginInterceptor;
@@ -21,11 +22,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +40,10 @@ import java.util.List;
  */
 @Service
 public class OrderServiceImpl implements OrderService {
+
+
+    @Autowired
+    private SkuMapper skuMapper;
 
     @Autowired
     private IdWorker idWorker;
@@ -113,6 +121,7 @@ public class OrderServiceImpl implements OrderService {
         logger.debug("生成订单，订单编号：{}，用户id：{}", orderId, userInfo.getId());
         return orderId;
     }
+
 
     /**
      * 根据订单号查询订单

@@ -1,12 +1,15 @@
 package com.leyou.seckill.controller;
 
 import com.leyou.common.pojo.UserInfo;
+import com.leyou.item.bo.SeckillParameter;
 import com.leyou.item.pojo.SeckillGoods;
 import com.leyou.seckill.access.AccessLimit;
 import com.leyou.seckill.client.GoodsClient;
 import com.leyou.seckill.interceptor.LoginInterceptor;
 import com.leyou.seckill.service.SeckillService;
-import com.leyou.seckill.vo.SeckillMessage;;
+
+
+import com.leyou.seckill.vo.SeckillMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +17,12 @@ import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.annotation.Resource;
+import java.text.ParseException;
+import java.util.*;
 
 /**
  * @author Duan Xiangqing
@@ -26,15 +30,17 @@ import java.util.Map;
  * @date 2021/2/23 11:34 下午
  */
 
+//@Controller
 @RestController
 @RequestMapping
-public class SeckillController implements InitializingBean {
+public class SeckillController/* implements InitializingBean */{
 
     @Autowired
     private SeckillService seckillService;
 
-    @Autowired
-    private GoodsClient goodsClient;
+        @Autowired
+//    @Resource
+    public GoodsClient goodsClient;
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -50,6 +56,7 @@ public class SeckillController implements InitializingBean {
      *
      * @throws Exception
      */
+    /*
     //实现InitializingBean接口需要重写这个方法
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -75,8 +82,9 @@ public class SeckillController implements InitializingBean {
         seckillGoods.forEach(goods -> {
             hashOperations.put(goods.getSkuId().toString(), goods.getStock().toString());
         });
-
     }
+
+     */
 
     //    创建秒杀订单
     //单个商品的订单
@@ -132,15 +140,15 @@ public class SeckillController implements InitializingBean {
     }
 
 
-//    @PostMapping("addSeckill")
-//    public ResponseEntity<Boolean> addSeckillGoods(@RequestBody SeckillParameter seckillParameter){
-//        if (seckillParameter != null){
-//            this.seckillService.addSeckillGoods(seckillParameter);
-//        }else {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//        return ResponseEntity.ok().build();
-//    }
+    @PostMapping("addSeckill")
+    public ResponseEntity<Boolean> addSeckillGoods(@RequestBody SeckillParameter seckillParameter) throws ParseException {
+        if (seckillParameter != null){
+            this.seckillService.addSeckillGoods(seckillParameter);
+        }else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.ok().build();
+    }
 
     //    根据userId查询订单号
     @GetMapping("orderId")
@@ -165,6 +173,15 @@ public class SeckillController implements InitializingBean {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(str);
+    }
+
+    @GetMapping("list")
+    public ResponseEntity<List<SeckillGoods>> querySeckillGoods(){
+        List<SeckillGoods> list = this.seckillService.querySeckillGoods();
+        if (list == null || list.size() < 0){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(list);
     }
 
 

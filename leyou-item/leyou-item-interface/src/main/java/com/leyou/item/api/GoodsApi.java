@@ -58,6 +58,6 @@ public interface GoodsApi {
     @GetMapping("/seckill/list")
     public List<SeckillGoods> querySeckillGoods();
 //     ResponseEntity<List<SeckillGoods>> querySeckillGoods();
-
+//
 
 }

@@ -3,12 +3,17 @@ package com.leyou.seckill.service;
 import com.leyou.item.bo.SeckillParameter;
 import com.leyou.item.pojo.SeckillGoods;
 import com.leyou.seckill.vo.SeckillMessage;
+import org.springframework.stereotype.Service;
+
+import java.text.ParseException;
+import java.util.List;
 
 /**
  * @author Duan Xiangqing
  * @version 1.0
  * @date 2021/2/23 11:39 下午
  */
+//@Service
 public interface SeckillService {
 
     /**
@@ -62,6 +67,10 @@ public interface SeckillService {
      * @return
      */
     boolean checkSeckillPath(Long goodsId, Long id, String path);
+
+    void addSeckillGoods(SeckillParameter seckillParameter) throws ParseException;
+
+    List<SeckillGoods> querySeckillGoods();
 
 //    void addSeckillGoods(SeckillParameter seckillParameter);
 }

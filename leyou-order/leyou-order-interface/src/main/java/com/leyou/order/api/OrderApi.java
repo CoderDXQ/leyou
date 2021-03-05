@@ -22,7 +22,7 @@ public interface OrderApi {
      * @return
      */
     @PostMapping
-    ResponseEntity<List<Long>> createOrder(@RequestParam("seck") String seck, @RequestBody @Valid Order order);
+    ResponseEntity<List<Long>> createOrder(@RequestParam("seck") String seck, @RequestBody /*@Valid */Order order);
 
 
     /**

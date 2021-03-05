@@ -48,6 +48,9 @@ public class GoodsService {
     @Autowired
     private SkuMapper skuMapper;
 
+//    @Autowired
+//    private StockMapper stockMapper;
+
     @Autowired
     private StockMapper stockMapper;
 
@@ -299,6 +302,7 @@ public class GoodsService {
         List<SeckillGoods> list = this.seckillMapper.selectByExample(example);
         list.forEach(goods -> {
 //            ？？？这里可能有数据处理错误 对照：https://blog.csdn.net/lyj2018gyq/article/details/83927764
+//            Stock stock = this.stockMappwer.selectByPrimaryKey(goods.getSkuId());
             Stock stock = this.stockMapper.selectByPrimaryKey(goods.getSkuId());
 //            秒杀商品的库存和秒杀库存是一样的
             goods.setStock(stock.getSeckillStock());
